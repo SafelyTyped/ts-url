@@ -30,5 +30,23 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./defaults/MODULE_NAME";
-export * from "./InvalidURLData";
+import { expect } from "chai";
+import { describe } from "mocha";
+
+import { InvalidURLDataError } from "./InvalidURLDataError";
+import { DEFAULT_DATA_PATH } from "@safelytyped/core-types";
+
+describe("InvalidURLDataError", () => {
+    describe(".constructor()", () => {
+        it("creates a Javascript error", () => {
+            const unit = new InvalidURLDataError({
+                public: {
+                    dataPath: DEFAULT_DATA_PATH,
+                    input: "THIS IS A TEST",
+                },
+            });
+
+            expect(unit).to.be.instanceOf(Error);
+        });
+    });
+});

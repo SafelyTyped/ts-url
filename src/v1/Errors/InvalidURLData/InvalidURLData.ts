@@ -30,5 +30,17 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./defaults/MODULE_NAME";
-export * from "./InvalidURLData";
+import { DataPath, ExtraPublicData } from "@safelytyped/core-types";
+
+/**
+ * `InvalidURLData` defines the data that every
+ * {@link InvalidURLError} requires.
+ *
+ * @category Errors
+ */
+export interface InvalidURLData extends ExtraPublicData {
+    public: {
+        dataPath: DataPath;
+        input: string;
+    };
+}
