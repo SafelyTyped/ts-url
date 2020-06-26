@@ -24,4 +24,6 @@ The following changes have been completed, and will be included in the next tagg
 ### New
 
 * Errors
-  - added InvalidURLDataError
+  - added `InvalidURLDataError`
+* URL
+  - added `validateURLData()`
