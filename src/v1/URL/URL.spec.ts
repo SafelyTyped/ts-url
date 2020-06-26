@@ -69,6 +69,19 @@ describe("URL", () => {
                 });
             });
         });
+
+        describe(".base", () => {
+            ValidURLs.forEach((example) => {
+                const { inputValue, baseValue } = example;
+                it("contains " + baseValue + " for a URL built with " + JSON.stringify(example), () => {
+                    const unit = new URL(inputValue, { base: baseValue });
+                    const actualValue = unit.base;
+
+                    expect(actualValue).to.equal(baseValue);
+                });
+            });
+        });
+
     });
 
     describe("base class", () => {
@@ -77,6 +90,28 @@ describe("URL", () => {
 
             expect(unit).to.be.instanceOf(URL);
             expect(unit).to.be.instanceOf(NodeURL);
+        });
+    });
+
+    describe("value protocol", () => {
+        describe(".valueOf()", () => {
+            ValidURLs.forEach((example) => {
+                const { inputValue, baseValue } = example;
+                it("returns " + inputValue + " for a URL built with " + JSON.stringify(example), () => {
+                    const unit = new URL(inputValue, { base: baseValue });
+                    const actualValue = unit.valueOf();
+
+                    expect(actualValue).to.equal(inputValue);
+                });
+            });
+        });
+
+        describe(".implementsValue()", () => {
+            it("returns `true`", () => {
+                const unit = new URL("http://www.example.com");
+
+                expect(unit.implementsValue()).to.equal(true);
+            });
         });
     });
 });

@@ -29,17 +29,25 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-import { DataPath, DEFAULT_DATA_PATH, OnError, THROW_THE_ERROR } from "@safelytyped/core-types";
+import {
+    DataPath,
+    DEFAULT_DATA_PATH,
+    OnError,
+    THROW_THE_ERROR,
+    Value,
+} from "@safelytyped/core-types";
 import { URL as NodeURL } from "url";
 
 import { InvalidURLDataError } from "../Errors";
 
 
-export class URL extends NodeURL {
+export class URL extends NodeURL implements Value<string>{
     /**
      * `base` tracks the URL that this URL is (possibly) partial to.
      */
     public readonly _base?: string;
+
+    public readonly _value: string;
 
     /**
      * `constructor()` is a smart constructor.
@@ -76,5 +84,41 @@ export class URL extends NodeURL {
         // As far as I can tell, there's no way to get the base value
         // our of our base class. We have to track it ourselves.
         this._base = base;
+        this._value = input;
+    }
+
+    /**
+     * `base` is the base URL that was used to build this URL.
+     */
+    get base() {
+        return this._base;
+    }
+
+    // =======================================================================
+    //
+    // VALUE protocol
+    //
+    // -----------------------------------------------------------------------
+
+    /**
+     * `valueOf()` returns this URL as a string.
+     *
+     * This will be the `input` passed into the constructor. It doesn't
+     * include the `base` value at all. Use {@link URL.toString} to get
+     * the full, absolute URL.
+     *
+     * @returns
+     * the `input` passed into the constructor.
+     */
+    public valueOf(): string {
+        return this._value;
+    }
+
+    /**
+     * `implementsValue()` is a helper method for the {@link isValue}
+     * type guard function.
+     */
+    public implementsValue(): boolean {
+        return true;
     }
 }
