@@ -25,6 +25,8 @@ The following changes have been completed, and will be included in the next tagg
 
 * Errors
   - added `InvalidURLDataError`
+* ParsedURL
+  - added `ParsedURL` interface
 * URL
   - added `URL` type
   - added `isURLData()`
