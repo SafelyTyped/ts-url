@@ -30,5 +30,16 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./isURLData";
-export * from "./validateURLData";
+import { validateURLData } from "./validateURLData";
+import { DEFAULT_DATA_PATH, AppError } from "@safelytyped/core-types";
+
+export function isURLData(
+    input: unknown,
+    {
+        base
+    }: {
+        base?: string
+    } = {}
+): boolean {
+    return (!(validateURLData(DEFAULT_DATA_PATH, input, { base }) instanceof AppError));
+}
