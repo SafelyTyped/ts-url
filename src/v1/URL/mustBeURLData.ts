@@ -29,7 +29,45 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
+import {
+    DataPath,
+    DEFAULT_DATA_PATH,
+    mustBe,
+    OnError,
+    THROW_THE_ERROR,
+} from "@safelytyped/core-types";
+import { URL } from "url";
+import { validateURLData } from "./validateURLData";
 
-export * from "./isURLData";
-export * from "./mustBeURLData";
-export * from "./validateURLData";
+/**
+ * `mustBeURLData()` is a data guard. Use it to ensure that the given
+ * `input` value can be used as a URL.
+ *
+ * @param input
+ * The value to ensure.
+ * @param base
+ * @param onError
+ * If `input` fails validation, we'll call your `onError` handler with an
+ * `AppError` to explain why.
+ * @param path
+ * Where are you in validating your nested structure? Use
+ * {@link DEFAULT_DATA_PATH} if you are not in a nested data structure.
+ * @returns
+ * - `input` converted to a `URL` on success
+ */
+export function mustBeURLData(
+    input: unknown,
+    {
+        base,
+        onError = THROW_THE_ERROR,
+        path = DEFAULT_DATA_PATH
+    }: {
+        base?: string,
+        onError?: OnError,
+        path?: DataPath
+    } = {}
+): URL {
+    return mustBe(input, { onError })
+        .next((x) => validateURLData(path, x, { base }))
+        .value();
+}

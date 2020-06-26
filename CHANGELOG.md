@@ -27,4 +27,5 @@ The following changes have been completed, and will be included in the next tagg
   - added `InvalidURLDataError`
 * URL
   - added `isURLData()`
+  - added `mustBeURLData()`
   - added `validateURLData()`
