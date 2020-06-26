@@ -37,4 +37,9 @@ export const ValidURLs = [
     { inputValue: "https://www.example.com", },
     { inputValue: "#this-is-a-fragment", baseValue: "http://example.com/" },
     { inputValue: "../this/is/a/relative/URL/", baseValue: "http://example.com/" },
-]
+];
+
+export const InvalidURLs = [
+    "#this-is-a-fragment-with-no-base",
+    "../this/is/a/relative/URL/with/no/base"
+];

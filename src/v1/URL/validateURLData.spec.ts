@@ -33,10 +33,11 @@
 import { describe } from "mocha";
 import { expect } from "chai";
 
-import { ValidURLs } from "../_fixtures/URLs.spec";
+import { ValidURLs, InvalidURLs } from "../_fixtures/URLs.spec";
 import { validateURLData } from "./validateURLData";
 import { DEFAULT_DATA_PATH } from "@safelytyped/core-types";
 import { URL } from "url";
+import { InvalidURLDataError } from "../Errors";
 
 describe("validateURLData()", () => {
     describe("accepts valid URLs", () => {
@@ -51,6 +52,18 @@ describe("validateURLData()", () => {
                     }
                 );
                 expect(actualValue).to.be.instanceOf(URL);
+            });
+        });
+    });
+
+    describe("rejects invalid / partial URLs", () => {
+        InvalidURLs.forEach((inputValue) => {
+            it("rejects " + inputValue, () => {
+                const actualValue = validateURLData(
+                    DEFAULT_DATA_PATH,
+                    inputValue
+                );
+                expect(actualValue).to.be.instanceOf(InvalidURLDataError);
             });
         });
     });

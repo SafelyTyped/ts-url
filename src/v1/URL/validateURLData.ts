@@ -62,18 +62,14 @@ export function validateURLData(
 ): AppErrorOr<URL> {
     return validate(input)
         .next((x) => validateString(path, x))
-        .next((x) => validateStringIsURL(path, x, { base }))
+        .next((x) => validateStringIsURL(path, x, base))
         .value();
 }
 
 function validateStringIsURL(
     path: DataPath,
     input: string,
-    {
-        base
-    }: {
-        base?: string
-    } = {}
+    base?: string
 ): AppErrorOr<URL> {
     try {
         return new URL(input, base);
