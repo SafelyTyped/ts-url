@@ -33,6 +33,17 @@
 import { validateURLData } from "./validateURLData";
 import { DEFAULT_DATA_PATH, AppError } from "@safelytyped/core-types";
 
+/**
+ * `isURLData()` is a data guard. Use it to determinte whether or not
+ * the given `input` data can be used to make a URL.
+ *
+ * @param input
+ * The data to evaluate.
+ * @param base
+ * @returns
+ * - `true` if `input` can be used to make a URL
+ * - `false` otherwise
+ */
 export function isURLData(
     input: unknown,
     {
