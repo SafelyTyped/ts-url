@@ -31,3 +31,7 @@ The following changes have been completed, and will be included in the next tagg
   - added `makeURL()`
   - added `mustBeURLData()`
   - added `validateURLData()`
+
+### Dependencies
+
+* Added `safelytyped/ip-port` as a dependency.
