@@ -29,15 +29,14 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-
-import { describe } from "mocha";
-import { expect } from "chai";
-
-import { ValidURLs, InvalidURLs } from "../_fixtures/URLs.spec";
-import { validateURLData } from "./validateURLData";
 import { DEFAULT_DATA_PATH } from "@safelytyped/core-types";
-import { URL } from "url";
+import { expect } from "chai";
+import { describe } from "mocha";
+
+import { InvalidURLs, ValidURLs } from "../_fixtures/URLs.spec";
 import { InvalidURLDataError } from "../Errors";
+import { validateURLData } from "./validateURLData";
+
 
 describe("validateURLData()", () => {
     describe("accepts valid URLs", () => {
@@ -51,7 +50,7 @@ describe("validateURLData()", () => {
                         base: baseValue
                     }
                 );
-                expect(actualValue).to.be.instanceOf(URL);
+                expect(actualValue).to.equal(inputValue);
             });
         });
     });

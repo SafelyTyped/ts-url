@@ -36,7 +36,7 @@ import {
     OnError,
     THROW_THE_ERROR,
 } from "@safelytyped/core-types";
-import { URL } from "url";
+
 import { validateURLData } from "./validateURLData";
 
 /**
@@ -73,7 +73,7 @@ export function mustBeURLData(
         onError?: OnError,
         path?: DataPath
     } = {}
-): URL {
+): string {
     return mustBe(input, { onError })
         .next((x) => validateURLData(path, x, { base }))
         .value();

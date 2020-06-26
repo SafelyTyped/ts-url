@@ -29,10 +29,10 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
+import { AppErrorOr, DataPath, validate, validateString } from "@safelytyped/core-types";
 
-import { URL } from "url";
-import { AppErrorOr, validate, validateString, DataPath } from "@safelytyped/core-types";
 import { InvalidURLDataError } from "../Errors";
+
 
 /**
  * `validateURLData()` is a data inspector. Use it to determine whether or
@@ -52,7 +52,7 @@ import { InvalidURLDataError } from "../Errors";
  * @param base
  * If `input` is not a full URL, set `base` to a full URL.
  * @returns
- * - `input` as a URL on success, or
+ * - `input` on success, or
  * - an AppError explaining why `input` failed validation
  *
  * @category URL
@@ -65,7 +65,7 @@ export function validateURLData(
     }: {
         base?: string
     } = {}
-): AppErrorOr<URL> {
+): AppErrorOr<string> {
     return validate(input)
         .next((x) => validateString(path, x))
         .next((x) => validateStringIsURL(path, x, base))
@@ -76,9 +76,11 @@ function validateStringIsURL(
     path: DataPath,
     input: string,
     base?: string
-): AppErrorOr<URL> {
+): AppErrorOr<string> {
     try {
-        return new URL(input, base);
+        // tslint:disable-next-line: no-unused-expression
+        new URL(input, base);
+        return input;
     } catch(e) {
         return new InvalidURLDataError({
             public: {

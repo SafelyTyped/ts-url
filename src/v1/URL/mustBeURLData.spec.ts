@@ -31,7 +31,6 @@
 //
 import { expect } from "chai";
 import { describe } from "mocha";
-import { URL } from "url";
 
 import { InvalidURLs, ValidURLs } from "../_fixtures/URLs.spec";
 import { InvalidURLDataError } from "../Errors";
@@ -49,7 +48,7 @@ describe("mustBeURLData()", () => {
                         base: baseValue
                     }
                 );
-                expect(actualValue).to.be.instanceOf(URL);
+                expect(actualValue).to.equal(inputValue);
             });
         });
     });
