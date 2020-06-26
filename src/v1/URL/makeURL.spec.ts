@@ -29,9 +29,43 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
+import { expect } from "chai";
+import { describe } from "mocha";
 
-export * from "./URL";
-export * from "./isURLData";
-export * from "./makeURL";
-export * from "./mustBeURLData";
-export * from "./validateURLData";
+import { InvalidURLs, ValidURLs } from "../_fixtures/URLs.spec";
+import { InvalidURLDataError } from "../Errors";
+import { makeURL } from "./makeURL";
+import { URL } from "./URL";
+
+
+describe("makeURL()", () => {
+    describe("accepts valid URLs", () => {
+        ValidURLs.forEach((example) => {
+            const { inputValue, baseValue } = example;
+
+            it("accepts " + inputValue + " (base: " + baseValue + ")", () => {
+                const actualValue = makeURL(
+                    inputValue, {
+                        base: baseValue
+                    }
+                );
+                expect(actualValue).to.be.instanceOf(URL);
+            });
+        });
+    });
+
+    describe("rejects invalid / partial URLs", () => {
+        InvalidURLs.forEach((inputValue) => {
+            it("rejects " + inputValue, () => {
+                let caughtException;
+
+                try {
+                    makeURL(inputValue);
+                } catch (e) {
+                    caughtException = e;
+                }
+                expect(caughtException).to.be.instanceOf(InvalidURLDataError);
+            });
+        });
+    });
+});
