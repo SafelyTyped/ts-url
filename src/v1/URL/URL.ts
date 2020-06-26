@@ -29,10 +29,11 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-
+import { DataPath, DEFAULT_DATA_PATH, OnError, THROW_THE_ERROR } from "@safelytyped/core-types";
 import { URL as NodeURL } from "url";
-import { THROW_THE_ERROR, DEFAULT_DATA_PATH, OnError, DataPath } from "@safelytyped/core-types";
-import { mustBeURLData } from "./mustBeURLData";
+
+import { InvalidURLDataError } from "../Errors";
+
 
 export class URL extends NodeURL {
     /**
@@ -58,11 +59,19 @@ export class URL extends NodeURL {
             path?: DataPath
         } = {}
     ) {
-        // enforce the contract
-        mustBeURLData(input, { base, path, onError });
-
-        // keep the base class happy
-        super(input, base);
+        // this is a bit different, because we're wrapping a built-in
+        // base class
+        try {
+            // keep the base class happy
+            super(input, base);
+        } catch (e) {
+            throw onError(new InvalidURLDataError({
+                public: {
+                    dataPath: path,
+                    input: base + input
+                }
+            }));
+        }
 
         // As far as I can tell, there's no way to get the base value
         // our of our base class. We have to track it ourselves.

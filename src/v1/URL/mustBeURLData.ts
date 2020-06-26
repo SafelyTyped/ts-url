@@ -73,7 +73,7 @@ export function mustBeURLData(
         onError?: OnError,
         path?: DataPath
     } = {}
-): string {
+): URL {
     return mustBe(input, { onError })
         .next((x) => validateURLData(path, x, { base }))
         .value();

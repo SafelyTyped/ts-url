@@ -32,7 +32,7 @@
 import { AppErrorOr, DataPath, validate, validateString } from "@safelytyped/core-types";
 
 import { InvalidURLDataError } from "../Errors";
-
+import { URL } from "./URL";
 
 /**
  * `validateURLData()` is a data inspector. Use it to determine whether or
@@ -65,7 +65,7 @@ export function validateURLData(
     }: {
         base?: string
     } = {}
-): AppErrorOr<string> {
+): AppErrorOr<URL> {
     return validate(input)
         .next((x) => validateString(path, x))
         .next((x) => validateStringIsURL(path, x, base))
@@ -76,11 +76,10 @@ function validateStringIsURL(
     path: DataPath,
     input: string,
     base?: string
-): AppErrorOr<string> {
+): AppErrorOr<URL> {
     try {
         // tslint:disable-next-line: no-unused-expression
-        new URL(input, base);
-        return input;
+        return new URL(input, { base });
     } catch(e) {
         return new InvalidURLDataError({
             public: {
