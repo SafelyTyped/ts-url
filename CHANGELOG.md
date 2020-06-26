@@ -29,6 +29,10 @@ The following changes have been completed, and will be included in the next tagg
   - added `ParsedURL` interface
 * URL
   - added `URL` type
+    - added `URL.base`
+    - added `URL.implementsValue()`
+    - added `URL.parse()`
+    - added `URL.valueOf()`
   - added `isURLData()`
   - added `makeURL()`
   - added `mustBeURLData()`

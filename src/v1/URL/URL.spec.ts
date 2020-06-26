@@ -29,12 +29,14 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
+import { makeIpPort } from "@safelytyped/ip-port";
 import { expect } from "chai";
 import { describe } from "mocha";
 import { URL as NodeURL } from "url";
 
 import { InvalidURLs, ValidURLs } from "../_fixtures/URLs.spec";
 import { InvalidURLDataError } from "../Errors";
+import { ParsedURL } from "../ParsedURL";
 import { URL } from "./URL";
 
 describe("URL", () => {
@@ -82,6 +84,39 @@ describe("URL", () => {
             });
         });
 
+        describe(".parse()", () => {
+            it("returns a breakdown of the URL's contents", () => {
+                const inputLocation = "http://example.com:8080/this/is/a/path?with=search#andFragment";
+                const unit = new URL(inputLocation);
+                const expectedValue: ParsedURL = {
+                    protocol: "http:",
+                    hostname: "example.com",
+                    port: makeIpPort("8080"),
+                    pathname: "/this/is/a/path",
+                    search: "?with=search",
+                    searchParams: new URLSearchParams("with=search"),
+                    hash: "#andFragment",
+                }
+
+                const actualValue = unit.parse();
+
+                expect(actualValue).to.eql(expectedValue);
+            });
+
+            it("only sets the fields that have a meaningful value", () => {
+                const inputLocation = "http://example.com";
+                const unit = new URL(inputLocation);
+                const expectedValue: ParsedURL = {
+                    protocol: "http:",
+                    hostname: "example.com",
+                    pathname: "/",
+                }
+
+                const actualValue = unit.parse();
+
+                expect(actualValue).to.eql(expectedValue);
+            });
+        });
     });
 
     describe("base class", () => {

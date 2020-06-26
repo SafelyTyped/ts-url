@@ -36,10 +36,11 @@ import {
     THROW_THE_ERROR,
     Value,
 } from "@safelytyped/core-types";
+import { makeIpPort } from "@safelytyped/ip-port";
 import { URL as NodeURL } from "url";
 
 import { InvalidURLDataError } from "../Errors";
-
+import { ParsedURL } from "../ParsedURL";
 
 export class URL extends NodeURL implements Value<string>{
     /**
@@ -92,6 +93,35 @@ export class URL extends NodeURL implements Value<string>{
      */
     get base() {
         return this._base;
+    }
+
+    /**
+     * `parse()` returns a breakdown of this URL. This is useful for
+     * manipulating the URL.
+     */
+    public parse(): ParsedURL {
+        const retval: ParsedURL = {
+            protocol: this.protocol,
+            hostname: this.hostname,
+            pathname: this.pathname,
+        };
+
+        // unfortunately, this is the best way to handle these
+        if (this.port.length > 0) {
+            retval.port = makeIpPort(this.port);
+        }
+        if (this.search.length > 0) {
+            retval.search = this.search;
+        }
+        if (this.hash.length > 0) {
+            retval.hash = this.hash;
+        }
+        if (retval.search) {
+            retval.searchParams = this.searchParams;
+        }
+
+        // all done
+        return retval;
     }
 
     // =======================================================================
