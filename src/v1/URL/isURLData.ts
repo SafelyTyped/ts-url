@@ -34,12 +34,17 @@ import { validateURLData } from "./validateURLData";
 import { DEFAULT_DATA_PATH, AppError } from "@safelytyped/core-types";
 
 /**
- * `isURLData()` is a data guard. Use it to determinte whether or not
+ * `isURLData()` is a data guard. Use it to determinee whether or not
  * the given `input` data can be used to make a URL.
+ *
+ * NOTE: for partial URLS (e.g. fragments), and for relative URLs,
+ * you need to set `base` too. The final URL will be evaluated by
+ * combining `base` and `input`.
  *
  * @param input
  * The data to evaluate.
  * @param base
+ * If `input` is not a full URL, set `base` to a full URL.
  * @returns
  * - `true` if `input` can be used to make a URL
  * - `false` otherwise

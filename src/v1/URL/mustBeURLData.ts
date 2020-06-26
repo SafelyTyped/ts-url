@@ -43,9 +43,14 @@ import { validateURLData } from "./validateURLData";
  * `mustBeURLData()` is a data guard. Use it to ensure that the given
  * `input` value can be used as a URL.
  *
+ * NOTE: for partial URLS (e.g. fragments), and for relative URLs,
+ * you need to set `base` too. The final URL will be evaluated by
+ * combining `base` and `input`.
+ *
  * @param input
  * The value to ensure.
  * @param base
+ * If `input` is not a full URL, set `base` to a full URL.
  * @param onError
  * If `input` fails validation, we'll call your `onError` handler with an
  * `AppError` to explain why.

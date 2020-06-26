@@ -40,11 +40,17 @@ import { InvalidURLDataError } from "../Errors";
  *
  * No attempt is made to prove that whatever the URL points at exists.
  *
+ * NOTE: for partial URLS (e.g. fragments), and for relative URLs,
+ * you need to set `base` too. The final URL will be evaluated by
+ * combining `base` and `input`.
+ *
  * @param path
  * Where are you in the nested structure that you are trying to validate?
  * Use {@link DEFAULT_DATA_PATH} if you are not inside a nested structure.
  * @param input
  * The data to validate.
+ * @param base
+ * If `input` is not a full URL, set `base` to a full URL.
  * @returns
  * - `input` as a URL on success, or
  * - an AppError explaining why `input` failed validation
