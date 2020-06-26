@@ -59,6 +59,8 @@ import { validateURLData } from "./validateURLData";
  * {@link DEFAULT_DATA_PATH} if you are not in a nested data structure.
  * @returns
  * - `input` converted to a `URL` on success
+ *
+ * @category URL
  */
 export function mustBeURLData(
     input: unknown,

@@ -48,6 +48,8 @@ import { DEFAULT_DATA_PATH, AppError } from "@safelytyped/core-types";
  * @returns
  * - `true` if `input` can be used to make a URL
  * - `false` otherwise
+ *
+ * @category URL
  */
 export function isURLData(
     input: unknown,
