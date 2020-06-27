@@ -30,6 +30,27 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./HRefParts";
-export * from "./HRefPartsWithHash";
-export * from "./isHRefPartsWithHash";
+import { HRefPartsWithHash } from "./HRefPartsWithHash";
+
+/**
+ * `isHRefPartsWithHash()` is a type guard. Use it to convince the compiler
+ * that the `input` value can be used as a {@link HRefPartsWithHash}.
+ *
+ * @param input
+ * the value to example
+ *
+ * @category HRefParts
+ */
+export function isHRefPartsWithHash(input: object): input is HRefPartsWithHash {
+    // do we *have* a `hash` property?
+    if (!(input as HRefPartsWithHash).hash) {
+        return false;
+    }
+
+    if (typeof (input as HRefPartsWithHash).hash !== "string") {
+        return false;
+    }
+
+    // all done
+    return true;
+}
