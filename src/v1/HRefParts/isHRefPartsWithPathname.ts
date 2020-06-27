@@ -30,10 +30,30 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./HRefParts";
-export * from "./HRefPartsWithHash";
-export * from "./HRefPartsWithHostname";
-export * from "./HRefPartsWithPathname";
-export * from "./isHRefPartsWithHash";
-export * from "./isHRefPartsWithHostname";
-export * from "./isHRefPartsWithPathname";
+import { HRefPartsWithPathname } from "./HRefPartsWithPathname";
+
+/**
+ * `isHRefPartsWithPathname()` is a type guard. Use it to convince the
+ * compiler that the `input` value can be used as a
+ * {@link HRefPartsWithPathname}.
+ *
+ * @param input
+ * the value to example
+ *
+ * @category HRefParts
+ */
+export function isHRefPartsWithPathname(
+    input: object
+): input is HRefPartsWithPathname {
+    // do we *have* a `pathname` property?
+    if (!(input as HRefPartsWithPathname).pathname) {
+        return false;
+    }
+
+    if (typeof (input as HRefPartsWithPathname).pathname !== "string") {
+        return false;
+    }
+
+    // all done
+    return true;
+}
