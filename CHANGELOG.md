@@ -25,6 +25,8 @@ The following changes have been completed, and will be included in the next tagg
 
 * Errors
   - added `InvalidURLDataError`
+* HRef
+  - added `makeHRef()`
 * HRefParts
   - added `HRefParts`
   - added `HRefPartsWithHash`

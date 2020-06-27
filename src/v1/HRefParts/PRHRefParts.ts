@@ -32,6 +32,8 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
+import { IpPort } from "@safelytyped/ip-port";
+
 /**
  * `PRHRefOptions` holds the parts of a URL, using terms from the
  * WHATWG specification.
@@ -65,7 +67,7 @@ export interface PRHRefParts {
      * A value of `undefined` means to use the default IP port number
      * for the given `protocol`.
      */
-    port?: string|number;
+    port?: IpPort;
 
     /**
      * `pathname` is the query path portion of the URL.
