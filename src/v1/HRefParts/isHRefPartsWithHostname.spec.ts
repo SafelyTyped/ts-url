@@ -30,8 +30,41 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./HRefParts";
-export * from "./HRefPartsWithHash";
-export * from "./HRefPartsWithHostname";
-export * from "./isHRefPartsWithHash";
-export * from "./isHRefPartsWithHostname";
+import { describe } from "mocha";
+import { expect } from "chai";
+import { isHRefPartsWithHostname } from "./isHRefPartsWithHostname";
+
+describe("isHRefPartsWithHostname()", () => {
+    describe("returns `true` for anything that has a `hostname` field", () => {
+        [
+            { hostname: "hello world" },
+        ].forEach((inputValue) => {
+            it("accepts " + JSON.stringify(inputValue), () => {
+                const actualValue = isHRefPartsWithHostname(inputValue);
+                expect(actualValue).to.equal(true);
+            });
+        });
+    });
+
+    describe("returns `false` if no `hostname` field is present", () => {
+        [
+            { not_a_hostname: "hello world" }
+        ].forEach((inputValue) => {
+            it("rejects " + JSON.stringify(inputValue), () => {
+                const actualValue = isHRefPartsWithHostname(inputValue);
+                expect(actualValue).to.equal(false);
+            });
+        });
+    });
+
+    describe("returns `false` if the `hostname` field is not a string", () => {
+        [
+            { hostname: true },
+        ].forEach((inputValue) => {
+            it("rejects " + JSON.stringify(inputValue), () => {
+                const actualValue = isHRefPartsWithHostname(inputValue);
+                expect(actualValue).to.equal(false);
+            });
+        });
+    });
+});

@@ -33,6 +33,7 @@ The following changes have been completed, and will be included in the next tagg
   - added `HRefPartsWithSearch`
   - added `PRHRefParts`
   - added `isHRefPartsWithHash()` type guard
+  - added `isHRefPartsWithHostname()` type guard
 * ParsedURL
   - added `ParsedURL` interface
 * URL
