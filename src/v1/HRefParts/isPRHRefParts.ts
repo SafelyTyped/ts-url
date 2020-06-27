@@ -30,12 +30,34 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./HRefParts";
-export * from "./HRefPartsWithHash";
-export * from "./HRefPartsWithHostname";
-export * from "./HRefPartsWithPathname";
-export * from "./PRHRefParts";
-export * from "./isHRefPartsWithHash";
-export * from "./isHRefPartsWithHostname";
-export * from "./isHRefPartsWithPathname";
-export * from "./isPRHRefParts";
+import { PRHRefParts } from "./PRHRefParts";
+
+/**
+ * `isPRHRefParts()` is a type guard. Use it to convince the compiler
+ * that the `input` value can be used as a {@link PRHRefParts}.
+ *
+ * @param input
+ * the value to example
+ *
+ * @category HRefParts
+ */
+export function isPRHRefParts(
+    input: object
+): input is PRHRefParts {
+    // step 1: check for the `protocolRelative` field
+    if (typeof (input as PRHRefParts).protocolRelative !== "boolean") {
+        return false;
+    }
+
+    // step 2: check for the `hostname` field
+    if (!(input as PRHRefParts).hostname) {
+        return false;
+    }
+
+    if (typeof (input as PRHRefParts).hostname !== "string") {
+        return false;
+    }
+
+    // all done
+    return true;
+}
