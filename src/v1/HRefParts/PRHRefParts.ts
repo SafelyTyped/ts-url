@@ -31,19 +31,28 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { IpPort } from "@safelytyped/ip-port";
 
 /**
- * `HrefPartsWithHostname` holds the parts of a URL, using terms from the
+ * `PRHRefOptions` holds the parts of a URL, using terms from the
  * WHATWG specification.
  *
- * This interface is built for URLs that definitely contain a hostname.
+ * This interface is built for URLs that take advantage of a feature called
+ * 'protocol-relative'.
+ *
+ * You shouldn't need to explicitly assign this type to a value. Use
+ * {@link HRefParts} instead.
+ *
+ * @category HRefParts
  */
-export interface HrefPartsWithHostname {
+export interface PRHRefParts {
     /**
-     * `protocol` holds the network scheme to use (eg 'http' or 'https').
+     * `protocolRelative` is a flag.
+     *
+     * - Set to `true` if you want a protocol-relative URL to be generated.
+     * - Set to `false` if you don't want a protocol specified at the front
+     *   of this URL.
      */
-    protocol?: string;
+    protocolRelative: boolean;
 
     /**
      * `hostname` is the server where the remote data is hosted.
@@ -56,7 +65,7 @@ export interface HrefPartsWithHostname {
      * A value of `undefined` means to use the default IP port number
      * for the given `protocol`.
      */
-    port?: IpPort;
+    port?: string|number;
 
     /**
      * `pathname` is the query path portion of the URL.
@@ -73,4 +82,3 @@ export interface HrefPartsWithHostname {
      */
     hash?: string;
 }
-

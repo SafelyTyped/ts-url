@@ -33,18 +33,18 @@
 //
 
 /**
- * `HrefPartsWithSearch` holds the parts of a URL, using terms from the
- * WHATWG specification.
+ * `HRefPartsWithPathname` holds the parts of a URL, using terms from
+ * the WHATWG specification.
  *
- * This interface is built for relative URLs that contain a query string
+ * This interface is built for relative URLs that contain a query path
  * of some kind.
  *
  * You shouldn't need to explicitly assign this type to a value. Use
- * {@link HrefParts} instead.
+ * {@link HRefParts} instead.
  *
- * @category HrefParts
+ * @category HRefParts
  */
-export interface HrefPartsWithSearch {
+export interface HRefPartsWithPathname {
     /**
      * `protocol` holds the network scheme to use (eg 'http' or 'https').
      */
@@ -53,15 +53,16 @@ export interface HrefPartsWithSearch {
     /**
      * `pathname` is the query path portion of the URL.
      */
-    pathname?: string;
+    pathname: string;
 
     /**
      * `search` holds the query string portion of the URL.
      */
-    search: string;
+    search?: string;
 
     /**
      * `hash` holds the #fragment section of the URL, if present.
      */
     hash?: string;
 }
+

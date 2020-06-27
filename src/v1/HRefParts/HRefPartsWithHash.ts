@@ -33,18 +33,18 @@
 //
 
 /**
- * `HrefPartsWithHash` holds the parts of a URL, using terms from the WHATWG
+ * `HRefPartsWithHash` holds the parts of a URL, using terms from the WHATWG
  *  specification.
  *
  * This interface is built for URLs that contain a '#fragment' of some kind,
  * called the 'hash' in the WHATWG specification.
  *
  * You shouldn't need to explicitly assign this type to a value. Use
- * {@link HrefParts} instead.
+ * {@link HRefParts} instead.
  *
- * @category HrefParts
+ * @category HRefParts
  */
-export interface HrefPartsWithHash {
+export interface HRefPartsWithHash {
     /**
      * `protocol` holds the network scheme to use (eg 'http' or 'https').
      */

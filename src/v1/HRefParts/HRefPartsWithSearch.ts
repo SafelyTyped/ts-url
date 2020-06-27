@@ -31,40 +31,24 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+
 /**
- * `PRHrefOptions` holds the parts of a URL, using terms from the
+ * `HRefPartsWithSearch` holds the parts of a URL, using terms from the
  * WHATWG specification.
  *
- * This interface is built for URLs that take advantage of a feature called
- * 'protocol-relative'.
+ * This interface is built for relative URLs that contain a query string
+ * of some kind.
  *
  * You shouldn't need to explicitly assign this type to a value. Use
- * {@link HrefParts} instead.
+ * {@link HRefParts} instead.
  *
- * @category HrefParts
+ * @category HRefParts
  */
-export interface PRHrefParts {
+export interface HRefPartsWithSearch {
     /**
-     * `protocolRelative` is a flag.
-     *
-     * - Set to `true` if you want a protocol-relative URL to be generated.
-     * - Set to `false` if you don't want a protocol specified at the front
-     *   of this URL.
+     * `protocol` holds the network scheme to use (eg 'http' or 'https').
      */
-    protocolRelative: boolean;
-
-    /**
-     * `hostname` is the server where the remote data is hosted.
-     */
-    hostname: string;
-
-    /**
-     * `port` is the IP port number to connect to on the remote hostname.
-     *
-     * A value of `undefined` means to use the default IP port number
-     * for the given `protocol`.
-     */
-    port?: string|number;
+    protocol?: string;
 
     /**
      * `pathname` is the query path portion of the URL.
@@ -74,7 +58,7 @@ export interface PRHrefParts {
     /**
      * `search` holds the query string portion of the URL.
      */
-    search?: string;
+    search: string;
 
     /**
      * `hash` holds the #fragment section of the URL, if present.

@@ -31,24 +31,24 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { HrefPartsWithHash } from "./HrefPartsWithHash";
-import { HrefPartsWithHostname } from "./HrefPartsWithHostname";
-import { HrefPartsWithPathname } from "./HrefPartsWithPathname";
-import { HrefPartsWithSearch } from "./HrefPartsWithSearch";
-import { PRHrefParts } from "./PRHrefParts";
+import { HRefPartsWithHash } from "./HRefPartsWithHash";
+import { HRefPartsWithHostname } from "./HRefPartsWithHostname";
+import { HRefPartsWithPathname } from "./HRefPartsWithPathname";
+import { HRefPartsWithSearch } from "./HRefPartsWithSearch";
+import { PRHRefParts } from "./PRHRefParts";
 
 /**
- * `HrefParts` holds the parts of a URL, using terms from the WHATWG
+ * `HRefParts` holds the parts of a URL, using terms from the WHATWG
  * specification.
  *
- * `HrefParts` is designed so that you can't compile a data structure
+ * `HRefParts` is designed so that you can't compile a data structure
  * containing unsupported combinations of parts.
  *
- * @category HrefParts
+ * @category HRefParts
  */
-export type HrefParts =
-    HrefPartsWithHostname
-    | PRHrefParts
-    | HrefPartsWithPathname
-    | HrefPartsWithSearch
-    | HrefPartsWithHash;
+export type HRefParts =
+    HRefPartsWithHostname
+    | PRHRefParts
+    | HRefPartsWithPathname
+    | HRefPartsWithSearch
+    | HRefPartsWithHash;
