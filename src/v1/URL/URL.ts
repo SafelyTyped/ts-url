@@ -63,7 +63,18 @@ export class URL extends NodeURL implements Value<string>{
      * `constructor()` is a smart constructor.
      *
      * @param input
-     * @param param1
+     * The HRef to build this URL from. If it isn't an absolute URL, then
+     * you need to pass an absolute URL in as the `base` parameter.
+     * @param onError
+     * If your `input` is rejected, we'll call this `onError` handler with
+     * an {@link AppError} to explain why.
+     * @param path
+     * Where are you in the nested data structure that you are creating?
+     * Use {@link DEFAULT_DATA_PATH} if you're not in a nested data structure.
+     * @param base
+     * We pass this as the `base` parameter to NodeJS's URL constructor.
+     * We also keep track of it, and pass it on to any URLs created using
+     * this URL.
      */
     public constructor(
         input: string,

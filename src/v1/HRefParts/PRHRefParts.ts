@@ -35,7 +35,7 @@
 import { IpPort } from "@safelytyped/ip-port";
 
 /**
- * `PRHRefOptions` holds the parts of a URL, using terms from the
+ * `PRHRefParts` holds the parts of a URL, using terms from the
  * WHATWG specification.
  *
  * This interface is built for URLs that take advantage of a feature called
