@@ -379,6 +379,26 @@ describe("URL", () => {
 
                 expect(actualValue).to.eql(expectedValue);
             });
+
+            it("caches the parsed URL details for next time", () => {
+                // we cannot access the cache from here
+                //
+                // the best we can do is make multiple calls
+                // to URL.parse(), and rely on code coverage
+                // to prove that the cache is being used
+                const inputLocation = "http://example.com";
+                const unit = new URL(inputLocation);
+                const expectedValue: ParsedURL = {
+                    protocol: "http:",
+                    hostname: "example.com",
+                    pathname: "/",
+                }
+
+                const actualValue = unit.parse();
+
+                expect(actualValue).to.eql(expectedValue);
+                expect(unit.parse()).to.eql(expectedValue);
+            });
         });
     });
 
