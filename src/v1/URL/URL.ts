@@ -166,6 +166,18 @@ export class URL extends NodeURL implements Value<string>{
         return super.host;
     }
 
+    /**
+     * `hostname` is the `hostname` section of the URL. Guaranteed not
+     * to be an empty string.
+     *
+     * Unlike the underlying NodeJS URL, this is readonly.
+     */
+    get hostname() {
+        return super.hostname;
+    }
+
+
+
     // =======================================================================
     //
     // VALUE protocol

@@ -52,6 +52,7 @@ The following changes have been completed, and will be included in the next tagg
     - added `URL.valueOf()`
     - made `URL.hash` read-only
     - made `URL.host` read-only
+    - made `URL.hostname` read-only
   - added `isURLData()`
   - added `makeURL()`
   - added `mustBeURLData()`

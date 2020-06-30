@@ -120,6 +120,24 @@ describe("URL", () => {
             });
         });
 
+        describe(".hostname", () => {
+            it("contains the hostname section of a URL", () => {
+                const unit = new URL("http://example.com:8080/this/is/a/path?with=search#andFragment");
+                const expectedValue = "example.com";
+
+                const actualValue = unit.hostname;
+                expect(actualValue).to.equal(expectedValue);
+            });
+
+            it("gets the hostname from the base URL, it not present in the main input value", () => {
+                const unit = new URL("../relative/path", { base: "http://example.com/this/is/a/path?with=search#andFragment" });
+                const expectedValue = "example.com";
+
+                const actualValue = unit.hostname;
+                expect(actualValue).to.equal(expectedValue);
+            });
+        });
+
         describe(".parse()", () => {
             it("returns a breakdown of the URL's contents", () => {
                 const inputLocation = "http://example.com:8080/this/is/a/path?with=search#andFragment";
