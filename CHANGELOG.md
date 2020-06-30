@@ -28,6 +28,7 @@ The following changes have been completed, and will be included in the next tagg
 * HRef
   - added `makeHRef()`
   - added `isAbsoluteHRefData()`
+  - added `isHRefHashData()`
 * HRefParts
   - added `HRefParts`
   - added `HRefPartsWithHash`

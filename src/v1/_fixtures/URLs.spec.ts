@@ -62,3 +62,19 @@ export const RelativeURLs = [
     "../this/is/a/relative/URL",
     "?this=is&an-alternative=search"
 ];
+
+export const RelativePathURLs = [
+    "../this/is/a/relative/URL",
+];
+
+export const AbsolutePathURLs = [
+    "/this/is/an/absolute/path/URL",
+];
+
+export const HashURLs = [
+    "#this-is-a-fragment",
+];
+
+export const SearchURLs = [
+    "?this=is&an-alternative=search",
+];
