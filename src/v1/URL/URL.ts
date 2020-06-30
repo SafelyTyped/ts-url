@@ -256,6 +256,15 @@ export class URL extends NodeURL implements Value<string>{
         return new URLSearchParams(super.searchParams);
     }
 
+    /**
+     * `username` is the username section of this URL. May be an empty string.
+     *
+     * Unlike the underlying NodeJS URL, this is readonly.
+     */
+    get username() {
+        return super.username;
+    }
+
     // =======================================================================
     //
     // VALUE protocol

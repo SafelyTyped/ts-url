@@ -319,6 +319,32 @@ describe("URL", () => {
             });
         });
 
+        describe(".username", () => {
+            it("contains the `username` section of the URL", () => {
+                const unit = new URL("http://donotusethis:password@example.com:8080/this/is/a/path?with=search#andFragment");
+                const expectedValue = "donotusethis";
+
+                const actualValue = unit.username;
+                expect(actualValue).to.equal(expectedValue);
+            });
+
+            it("contains the normalised combination of main input value and base value", () => {
+                const unit = new URL("../another/path#andDifferentFragment", { base: "http://donotusethis:password@example.com/this/is/a/path?with=search#andFragment" });
+                const expectedValue = "donotusethis";
+
+                const actualValue = unit.username;
+                expect(actualValue).to.equal(expectedValue);
+            });
+
+            it("is an empty string if the URL does not have a `username` section", () => {
+                const unit = new URL("http://example.com:8080/this/is/a/path?with=search#andFragment");
+                const expectedValue = "";
+
+                const actualValue = unit.username;
+                expect(actualValue).to.equal(expectedValue);
+            });
+        });
+
         describe(".parse()", () => {
             it("returns a breakdown of the URL's contents", () => {
                 const inputLocation = "http://example.com:8080/this/is/a/path?with=search#andFragment";

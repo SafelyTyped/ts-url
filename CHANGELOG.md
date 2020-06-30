@@ -61,6 +61,7 @@ The following changes have been completed, and will be included in the next tagg
     - made `URL.protocol` read-only
     - made `URL.search` read-only
     - made `URL.searchParams` read-only and side effect-free
+    - made `ULR.username` read-only
   - added `isURLData()`
   - added `makeURL()`
   - added `mustBeURLData()`
