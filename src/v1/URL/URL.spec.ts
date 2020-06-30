@@ -270,6 +270,32 @@ describe("URL", () => {
             });
         });
 
+        describe(".search", () => {
+            it("contains the `search` section of the URL", () => {
+                const unit = new URL("http://example.com:8080/this/is/a/path?with=search#andFragment");
+                const expectedValue = "?with=search";
+
+                const actualValue = unit.search;
+                expect(actualValue).to.equal(expectedValue);
+            });
+
+            it("contains the normalised combination of main input value and base value", () => {
+                const unit = new URL("#andDifferentFragment", { base: "http://example.com:8080/this/is/a/path?with=search#andFragment" });
+                const expectedValue = "?with=search";
+
+                const actualValue = unit.search;
+                expect(actualValue).to.equal(expectedValue);
+            });
+
+            it("is empty string if the URL does not have a `search` section", () => {
+                const unit = new URL("http://example.com");
+                const expectedValue = "";
+
+                const actualValue = unit.search;
+                expect(actualValue).to.equal(expectedValue);
+            });
+        });
+
         describe(".parse()", () => {
             it("returns a breakdown of the URL's contents", () => {
                 const inputLocation = "http://example.com:8080/this/is/a/path?with=search#andFragment";

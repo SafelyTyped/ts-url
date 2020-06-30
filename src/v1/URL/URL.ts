@@ -235,6 +235,16 @@ export class URL extends NodeURL implements Value<string>{
         return super.protocol;
     }
 
+    /**
+     * `search` is the query string section of this URL. May be an empty
+     * string.
+     *
+     * Unlike the underlying NodeJS URL, this is readonly.
+     */
+    get search() {
+        return super.search;
+    }
+
     // =======================================================================
     //
     // VALUE protocol
