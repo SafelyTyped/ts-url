@@ -29,6 +29,56 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
+import { expect } from "chai";
+import { describe } from "mocha";
 
-export * from "./defaults/MODULE_NAME";
-export * from "./InvalidURLData";
+import {
+    AbsoluteURLs,
+    HashURLs,
+    ProtocolRelativeURLs,
+    RelativePathURLs,
+    SearchURLs,
+} from "../_fixtures/URLs.spec";
+import { isHRefSearchData } from "./isHRefSearchData";
+
+describe("isHRefSearchData()", () => {
+    describe("accepts search URLs", () => {
+        SearchURLs.forEach((inputValue) => {
+            it("accepts " + inputValue, () => {
+                expect(isHRefSearchData(inputValue)).to.equal(true);
+            });
+        });
+    });
+
+    describe("rejects absolute URLs", () => {
+        AbsoluteURLs.forEach((inputValue) => {
+            it("rejects " + inputValue, () => {
+                expect(isHRefSearchData(inputValue)).to.equal(false);
+            });
+        });
+    });
+
+    describe("rejects protocol-relative URLs", () => {
+        ProtocolRelativeURLs.forEach((inputValue) => {
+            it("rejects " + inputValue, () => {
+                expect(isHRefSearchData(inputValue)).to.equal(false);
+            });
+        });
+    });
+
+    describe("rejects relative-path URLs", () => {
+        RelativePathURLs.forEach((inputValue) => {
+            it("rejects " + inputValue, () => {
+                expect(isHRefSearchData(inputValue)).to.equal(false);
+            });
+        });
+    });
+
+    describe("rejects URL fragments", () => {
+        HashURLs.forEach((inputValue) => {
+            it("rejects " + inputValue, () => {
+                expect(isHRefSearchData(inputValue)).to.equal(false);
+            });
+        });
+    });
+});

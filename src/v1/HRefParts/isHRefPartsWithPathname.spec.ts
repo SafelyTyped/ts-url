@@ -30,5 +30,41 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./defaults/MODULE_NAME";
-export * from "./InvalidURLData";
+import { describe } from "mocha";
+import { expect } from "chai";
+import { isHRefPartsWithPathname } from "./isHRefPartsWithPathname";
+
+describe("isHRefPartsWithPathname()", () => {
+    describe("returns `true` for anything that has a `pathname` field", () => {
+        [
+            { pathname: "hello world" },
+        ].forEach((inputValue) => {
+            it("accepts " + JSON.stringify(inputValue), () => {
+                const actualValue = isHRefPartsWithPathname(inputValue);
+                expect(actualValue).to.equal(true);
+            });
+        });
+    });
+
+    describe("returns `false` if no `pathname` field is present", () => {
+        [
+            { not_a_pathname: "hello world" }
+        ].forEach((inputValue) => {
+            it("rejects " + JSON.stringify(inputValue), () => {
+                const actualValue = isHRefPartsWithPathname(inputValue);
+                expect(actualValue).to.equal(false);
+            });
+        });
+    });
+
+    describe("returns `false` if the `pathname` field is not a string", () => {
+        [
+            { pathname: true },
+        ].forEach((inputValue) => {
+            it("rejects " + JSON.stringify(inputValue), () => {
+                const actualValue = isHRefPartsWithPathname(inputValue);
+                expect(actualValue).to.equal(false);
+            });
+        });
+    });
+});

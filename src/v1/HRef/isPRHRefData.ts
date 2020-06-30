@@ -30,5 +30,18 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./defaults/MODULE_NAME";
-export * from "./InvalidURLData";
+/**
+ * `isPRHRefData()` is a data guard. Use it to prove that the given input
+ * string contains a protocol-relative Hypertext Reference (HRef).
+ *
+ * @param input
+ * the value to example
+ * @returns
+ * - `true` if `input` contains a protocol relative href
+ * - `false` otherwise
+ *
+ * @category HRef
+ */
+export function isPRHRefData(input: string): boolean {
+    return input.startsWith("//");
+}

@@ -30,5 +30,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./defaults/MODULE_NAME";
-export * from "./InvalidURLData";
+export * from "./URL";
+export * from "./isURLData";
+export * from "./makeURL";
+export * from "./mustBeURLData";
+export * from "./validateURLData";

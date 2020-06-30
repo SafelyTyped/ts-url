@@ -21,26 +21,59 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
-### Backwards-Compatibility Breaks
+## v0.1.0
+
+Released Tuesday, 30th June 2020.
 
 ### New
 
-### Fixes
+* Errors
+  - added `InvalidURLDataError`
+* HRef
+  - added `makeHRef()`
+  - added `isAbsoluteHRefData()`
+  - added `isHRefHashData()`
+  - added `isHRefSearchData()`
+  - added `isPRHRefData()`
+* HRefParts
+  - added `HRefParts`
+  - added `HRefPartsWithHash`
+  - added `HRefPartsWithHostname`
+  - added `HRefPartsWithPathname`
+  - added `HRefPartsWithSearch`
+  - added `PRHRefParts`
+  - added `isHRefPartsWithHash()` type guard
+  - added `isHRefPartsWithHostname()` type guard
+  - added `isHRefPartsWithPathname()` type guard
+  - added `isPRHRefParts()` type guard
+* ParsedURL
+  - added `ParsedURL` interface
+* URL
+  - added `URL` type
+    - added `URL.base`
+    - added `URL.dirname()`
+    - added `URL.implementsValue()`
+    - added `URL.join()`
+    - added `URL.parse()`
+    - added `URL.resolve()`
+    - added `URL.valueOf()`
+    - made `URL.hash` read-only
+    - made `URL.host` read-only
+    - made `URL.hostname` read-only
+    - made `URL.href` read-only
+    - made `URL.origin` read-only
+    - made `URL.password` read-only
+    - made `URL.pathname` read-only
+    - made `URL.port` read-only
+    - made `URL.protocol` read-only
+    - made `URL.search` read-only
+    - made `URL.searchParams` read-only and side effect-free
+    - made `ULR.username` read-only
+  - added `isURLData()`
+  - added `makeURL()`
+  - added `mustBeURLData()`
+  - added `validateURLData()`
 
 ### Dependencies
 
-### Tools
-
-## v0.0.1
-
-Released Monday, 1st January 2020.
-
-### Backwards-Compatibility Breaks
-
-### New
-
-### Fixes
-
-### Dependencies
-
-### Tools
+* Added `safelytyped/ip-port` as a dependency.

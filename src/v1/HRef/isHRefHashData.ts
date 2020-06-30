@@ -30,5 +30,18 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./defaults/MODULE_NAME";
-export * from "./InvalidURLData";
+/**
+ * `isHRefHashData()` is a data guard. Use it to prove that the given input
+ * string contains a Hypertext Reference (HRef) hash (fragment).
+ *
+ * @param input
+ * the value to example
+ * @returns
+ * - `true` if `input` contains a hash (fragment)
+ * - `false` otherwise
+ *
+ * @category HRef
+ */
+export function isHRefHashData(input: string): boolean {
+    return input.startsWith("#");
+}

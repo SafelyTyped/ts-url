@@ -1,6 +1,6 @@
 {
   "name": "@safelytyped/url",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A safe type for working with remote locations, for Typescript.",
   "repository": "github:SafelyTyped/ts-url",
   "main": "lib/v1/index.js",
@@ -26,7 +26,8 @@
   ],
   "license": "BSD-3-Clause",
   "dependencies": {
-    "@safelytyped/core-types": "^0.1.0"
+    "@safelytyped/core-types": "^0.1.11",
+    "@safelytyped/ip-port": "^0.1.0"
   },
   "devDependencies": {
     "@types/chai": "^4.2.8",
@@ -40,7 +41,7 @@
     "rimraf": "^3.0.0",
     "ts-node": "^8.0.0",
     "tslint": "^6.0.0",
-    "typedoc": "^0.17.7",
+    "typedoc": "^0.17.8",
     "typescript": "^3.9.5"
   }
 }

@@ -30,5 +30,41 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./defaults/MODULE_NAME";
-export * from "./InvalidURLData";
+import { describe } from "mocha";
+import { expect } from "chai";
+import { isHRefPartsWithHash } from "./isHRefPartsWithHash";
+
+describe("isHRefPartsWithHash()", () => {
+    describe("returns `true` for anything that has a `hash` field", () => {
+        [
+            { hash: "hello world" },
+        ].forEach((inputValue) => {
+            it("accepts " + JSON.stringify(inputValue), () => {
+                const actualValue = isHRefPartsWithHash(inputValue);
+                expect(actualValue).to.equal(true);
+            });
+        });
+    });
+
+    describe("returns `false` if no `hash` field is present", () => {
+        [
+            { not_a_hash: "hello world" }
+        ].forEach((inputValue) => {
+            it("rejects " + JSON.stringify(inputValue), () => {
+                const actualValue = isHRefPartsWithHash(inputValue);
+                expect(actualValue).to.equal(false);
+            });
+        });
+    });
+
+    describe("returns `false` if the `hash` field is not a string", () => {
+        [
+            { hash: true },
+        ].forEach((inputValue) => {
+            it("rejects " + JSON.stringify(inputValue), () => {
+                const actualValue = isHRefPartsWithHash(inputValue);
+                expect(actualValue).to.equal(false);
+            });
+        });
+    });
+});

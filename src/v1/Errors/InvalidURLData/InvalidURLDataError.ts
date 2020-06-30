@@ -30,5 +30,32 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./defaults/MODULE_NAME";
-export * from "./InvalidURLData";
+import {
+    AppError,
+    AppErrorData,
+    makeHttpStatusCode,
+    makeStructuredProblemReport
+} from "@safelytyped/core-types";
+
+import { MODULE_NAME } from "../defaults/MODULE_NAME";
+import { InvalidURLData } from "./InvalidURLData";
+
+/**
+ * `InvalidURLDataError` is thrown whenever we're given an
+ * invalid value to {@link makeURL}.
+ *
+ * @category Errors
+ */
+export class InvalidURLDataError extends AppError<InvalidURLData> {
+    public constructor(params: InvalidURLData & AppErrorData) {
+        const spr = makeStructuredProblemReport<InvalidURLData>({
+            definedBy: MODULE_NAME,
+            description: "input falls outside the range of a valid URL",
+            errorId: params.errorId,
+            extra: { public: params.public },
+            status: makeHttpStatusCode(422),
+        });
+
+        super(spr);
+    }
+}

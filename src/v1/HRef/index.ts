@@ -30,5 +30,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./defaults/MODULE_NAME";
-export * from "./InvalidURLData";
+export * from "./isAbsoluteHRefData";
+export * from "./isHRefHashData";
+export * from "./isHRefSearchData";
+export * from "./isPRHRefData";
+export * from "./makeHRef";
