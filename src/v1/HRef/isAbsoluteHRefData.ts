@@ -30,5 +30,24 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./isAbsoluteHRefData";
-export * from "./makeHRef";
+const AbsoluteHRefRegex = new RegExp("^(?<protocol>[a-zA-Z][a-zA-Z0-9]+)://(?<hostname>[^:/]+)");
+
+/**
+ * `isAbsoluteHRefData()` is a data guard. Use it to prove that the given
+ * input string contains an absolute Hypertext Reference (HRef).
+ *
+ * An absolute href:
+ * - starts with a protocol
+ * - contains a hostname too
+ *
+ * @param input
+ * the value to example
+ * @returns
+ * - `true` if `input` contains something that looks like an absolute HRef,
+ * - `false` otherwise
+ *
+ * @category HRef
+ */
+export function isAbsoluteHRefData(input: string): boolean {
+    return AbsoluteHRefRegex.test(input);
+}

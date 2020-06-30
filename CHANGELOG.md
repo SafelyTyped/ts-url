@@ -27,6 +27,7 @@ The following changes have been completed, and will be included in the next tagg
   - added `InvalidURLDataError`
 * HRef
   - added `makeHRef()`
+  - added `isAbsoluteHRefData()`
 * HRefParts
   - added `HRefParts`
   - added `HRefPartsWithHash`

@@ -30,5 +30,33 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./isAbsoluteHRefData";
-export * from "./makeHRef";
+import { describe } from "mocha";
+import { expect } from "chai";
+import { isAbsoluteHRefData } from "./isAbsoluteHRefData";
+import { AbsoluteURLs, ProtocolRelativeURLs, RelativeURLs } from "../_fixtures/URLs.spec";
+
+describe("isAbsoluteHRefData()", () => {
+    describe("accepts absolute URLs", () => {
+        AbsoluteURLs.forEach((inputValue) => {
+            it("accepts " + inputValue, () => {
+                expect(isAbsoluteHRefData(inputValue)).to.equal(true);
+            });
+        });
+    });
+
+    describe("rejects protocol-relative URLs", () => {
+        ProtocolRelativeURLs.forEach((inputValue) => {
+            it("rejects " + inputValue, () => {
+                expect(isAbsoluteHRefData(inputValue)).to.equal(false);
+            });
+        });
+    });
+
+    describe("rejects relative URLs", () => {
+        RelativeURLs.forEach((inputValue) => {
+            it("rejects " + inputValue, () => {
+                expect(isAbsoluteHRefData(inputValue)).to.equal(false);
+            });
+        });
+    });
+});

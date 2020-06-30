@@ -43,3 +43,22 @@ export const InvalidURLs = [
     "#this-is-a-fragment-with-no-base",
     "../this/is/a/relative/URL/with/no/base"
 ];
+
+export const ProtocolRelativeURLs = [
+    "//archive.org",
+    "//www.example.com",
+    "//localhost"
+];
+
+export const AbsoluteURLs = [
+    "http://example.com",
+    "http://www.example.com",
+    "https://example.com",
+    "https://www.example.com",
+];
+
+export const RelativeURLs = [
+    "#this-is-a-fragment",
+    "../this/is/a/relative/URL",
+    "?this=is&an-alternative=search"
+];
