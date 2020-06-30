@@ -37,10 +37,12 @@ import {
     Value,
 } from "@safelytyped/core-types";
 import { makeIpPort } from "@safelytyped/ip-port";
+import { posix } from "path";
 import { URL as NodeURL, URLSearchParams } from "url";
 
 import { InvalidURLDataError } from "../Errors";
 import { ParsedURL } from "../ParsedURL";
+import { makeHRef } from "../HRef";
 
 export class URL extends NodeURL implements Value<string>{
     /**
@@ -305,5 +307,23 @@ export class URL extends NodeURL implements Value<string>{
     //
     // -----------------------------------------------------------------------
 
+    /**
+     * `dirname()` builds a new URL that points to the parent folder
+     * of the current URL.
+     *
+     * The new URL:
+     * - has the same `base` as this URL
+     * - has no `search` terms
+     * - has no `#fragment`
+     */
+    public dirname() {
+        const parts = this.parse();
+        parts.pathname = posix.dirname(parts.pathname);
 
+        parts.search = undefined;
+        parts.hash = undefined;
+
+        const href = makeHRef(parts);
+        return new URL(href, { base: this.base });
+    }
 }

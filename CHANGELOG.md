@@ -47,6 +47,7 @@ The following changes have been completed, and will be included in the next tagg
 * URL
   - added `URL` type
     - added `URL.base`
+    - added `URL.dirname()`
     - added `URL.implementsValue()`
     - added `URL.parse()`
     - added `URL.valueOf()`

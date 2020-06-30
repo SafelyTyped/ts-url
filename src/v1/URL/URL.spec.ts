@@ -411,6 +411,66 @@ describe("URL", () => {
         });
     });
 
+    describe("path protocol", () => {
+        describe(".dirname()", () => {
+            it("returns a new URL that points to the parent folder", () => {
+                const unit = new URL("http://example.com/this/is/a/path");
+                const expectedValue = "http://example.com/this/is/a";
+
+                const actualValue = unit.dirname().href;
+                expect(actualValue).to.equal(expectedValue);
+            });
+
+            it("if orig URL already points to top-level folder, so will the new URL", () => {
+                const url = new URL("http://example.com");
+                const expectedHRef = "http://example.com/";
+                const expectedPathname = "/";
+
+                const unit = url.dirname();
+
+                const actualHRef = unit.href;
+                const actualPathname = unit.pathname;
+
+                expect(actualHRef).to.equal(expectedHRef);
+                expect(actualPathname).to.equal(expectedPathname);
+            });
+
+            it("returned URL has the same base", () => {
+                const url = new URL("this/is/a/path", { base: "http://example.com" });
+                const expectedHRef = "http://example.com/this/is/a";
+                const expectedBase = "http://example.com";
+
+                const unit = url.dirname();
+                const actualHRef = unit.href;
+                const actualBase = unit.base;
+
+                expect(actualHRef).to.equal(expectedHRef);
+                expect(actualBase).to.equal(expectedBase);
+                expect(unit.base).to.equal(url.base);
+            });
+
+            it("drops any search terms", () => {
+                const url = new URL("http://example.com/this/is/a/path?with=search");
+                const expectedValue = "http://example.com/this/is/a";
+
+                const unit = url.dirname();
+
+                expect(unit.href).to.equal(expectedValue);
+                expect(unit.search).to.equal("");
+            });
+
+            it("drops any #fragment", () => {
+                const url = new URL("http://example.com/this/is/a/path#withFragment");
+                const expectedValue = "http://example.com/this/is/a";
+
+                const unit = url.dirname();
+
+                expect(unit.href).to.equal(expectedValue);
+                expect(unit.hash).to.equal("");
+            });
+        });
+    });
+
     describe("value protocol", () => {
         describe(".valueOf()", () => {
             ValidURLs.forEach((example) => {
