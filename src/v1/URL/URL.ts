@@ -41,8 +41,8 @@ import { posix } from "path";
 import { URL as NodeURL, URLSearchParams } from "url";
 
 import { InvalidURLDataError } from "../Errors";
+import { isAbsoluteHRefData, isHRefHashData, isHRefSearchData, makeHRef } from "../HRef";
 import { ParsedURL } from "../ParsedURL";
-import { makeHRef } from "../HRef";
 
 export class URL extends NodeURL implements Value<string>{
     /**
@@ -346,6 +346,84 @@ export class URL extends NodeURL implements Value<string>{
         parts.search = undefined;
         parts.hash = undefined;
 
+        const href = makeHRef(parts);
+        return new URL(href, { base: this.base });
+    }
+
+    /**
+     * `resolve()` builds a new URL by combining this URL with the given
+     * parts.
+     *
+     * It works right-to-left (from the last given part backwards), and
+     * it stops when:
+     *
+     * a) it comes across a new absolute URL (e.g. https://example.com), or
+     * b) when it runs out of parts to apply.
+     *
+     * Zero-length parts are ignored.
+     *
+     * If no parts are passed in, `resolve()` creates a clone of the
+     * current URL.
+     *
+     * Some basic rules:
+     * - if you replace the `#fragment`, the `?search` string and `/pathname`
+     *   are left untouched
+     * - if you replace the `?search` string, we drop any `#fragment` that
+     *   might be there
+     * - if you replace or modify the `/pathname`, we drop any `?search` and
+     *   and `#fragment` that might be in the URL
+     *
+     * The returned URL will have:
+     * - the same `base` value that this URL does, if you haven't passed in
+     *   a full HRef, or
+     * - `base` will be the same value as the new URL
+     */
+    public resolve(...hrefsOrParts: string[]): URL {
+        const parts = this.parse();
+
+        // apply each of the changes we've been given
+        //
+        // our challenge here is that the caller can provide pretty
+        // much any kind of part they want
+        for (const hrefOrPart of hrefsOrParts.reverse()) {
+            // special case: we ignore zero-length parts
+            if (hrefOrPart.length === 0) {
+                continue;
+            }
+
+            // special case: we've been given a replacement URL
+            if (isAbsoluteHRefData(hrefOrPart)) {
+                // a full URL replaces our existing URL,
+                // and brings our journey to an end
+                return new URL(hrefOrPart, { base: hrefOrPart });
+            }
+
+            // general cases: we're going to mod the parts we've
+            // already got ... even though we might end up throwing
+            // it all away
+            if (isHRefSearchData(hrefOrPart)) {
+                // a query string replaces any existing query string we have
+                parts.search = hrefOrPart;
+
+                // drop everything that comes after the search segment
+                parts.hash = undefined;
+            } else if (isHRefHashData(hrefOrPart)) {
+                // a #fragment replaces any existing fragment we have
+                parts.hash = hrefOrPart;
+
+                // the hash is the last segment of a URL, so we don't
+                // need to drop anything else
+            } else {
+                // a path gets merged into our existing URL's parts
+                parts.pathname = posix.join(parts.pathname, hrefOrPart);
+
+                // drop everything that comes after the pathname segment
+                parts.search = undefined;
+                parts.hash = undefined;
+            }
+        }
+
+        // all done
         const href = makeHRef(parts);
         return new URL(href, { base: this.base });
     }

@@ -51,6 +51,7 @@ The following changes have been completed, and will be included in the next tagg
     - added `URL.implementsValue()`
     - added `URL.join()`
     - added `URL.parse()`
+    - added `URL.resolve()`
     - added `URL.valueOf()`
     - made `URL.hash` read-only
     - made `URL.host` read-only

@@ -520,6 +520,62 @@ describe("URL", () => {
                 expect(unit.hash).to.equal("");
             });
         });
+
+        describe(".resolve()", () => {
+            it("ignores empty parts", () => {
+                const origUrl = new URL("http://example.com/this/is/a/path?with=search#andFragment");
+                const expectedHRef = "http://example.com/this/is/our/new/path";
+
+                // resolve() works right to left, which is a bit weird
+                // to work with!
+                const newUrl = origUrl.resolve("path", "", "our/new", "", "../", "..");
+                const actualHRef = newUrl.href;
+
+                expect(actualHRef).to.equal(expectedHRef);
+            });
+
+            it("returns a new URL that incorporates a modified pathname", () => {
+                const origUrl = new URL("http://example.com/this/is/a/path?with=search#andFragment");
+                const expectedHRef = "http://example.com/this/is/our/new/path";
+
+                // resolve() works right to left, which is a bit weird
+                // to work with!
+                const newUrl = origUrl.resolve("path", "our/new", "../", "..");
+                const actualHRef = newUrl.href;
+
+                expect(actualHRef).to.equal(expectedHRef);
+            });
+
+            it("returns a new URL that incorporates a replaced fragment", () => {
+                const origUrl = new URL("http://example.com/this/is/a/path?with=search#andFragment");
+                const expectedHRef = "http://example.com/this/is/a/path?with=search#andDifferentFragment";
+
+                const newUrl = origUrl.resolve("#andDifferentFragment");
+                const actualHRef = newUrl.href;
+
+                expect(actualHRef).to.equal(expectedHRef);
+            });
+
+            it("returns a new URL that incorporates a replaced search", () => {
+                const origUrl = new URL("http://example.com/this/is/a/path?with=search#andFragment");
+                const expectedHRef = "http://example.com/this/is/a/path?with=aDifferentSearch";
+
+                const newUrl = origUrl.resolve("?with=aDifferentSearch");
+                const actualHRef = newUrl.href;
+
+                expect(actualHRef).to.equal(expectedHRef);
+            });
+
+            it("ignores any prior changes if it comes across a new URL part", () => {
+                const origUrl = new URL("http://example.com/this/is/a/path?with=search#andFragment");
+                const expectedHRef = "https://www.example.com/this/is/a/path?with=aDifferentSearch#andDifferentFragment";
+
+                const newUrl = origUrl.resolve(expectedHRef, "..");
+                const actualHRef = newUrl.href;
+
+                expect(actualHRef).to.equal(expectedHRef);
+            });
+        });
     });
 
     describe("value protocol", () => {
