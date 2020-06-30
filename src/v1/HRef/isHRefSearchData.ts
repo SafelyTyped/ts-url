@@ -30,7 +30,18 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./isAbsoluteHRefData";
-export * from "./isHRefHashData";
-export * from "./isHRefSearchData";
-export * from "./makeHRef";
+/**
+ * `isHRefSearchData()` is a data guard. Use it to prove that the given input
+ * string contains a Hypertext Reference (HRef) search (query string).
+ *
+ * @param input
+ * the value to example
+ * @returns
+ * - `true` if `input` contains a search (query string)
+ * - `false` otherwise
+ *
+ * @category HRef
+ */
+export function isHRefSearchData(input: string): boolean {
+    return input.startsWith("?");
+}
