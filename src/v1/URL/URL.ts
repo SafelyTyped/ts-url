@@ -195,6 +195,16 @@ export class URL extends NodeURL implements Value<string>{
         return super.origin;
     }
 
+    /**
+     * `password` is the `password` section of this URL. May be an empty
+     * string.
+     *
+     * Unlike the underlying NodeJS URL, this is readonly.
+     */
+    get password() {
+        return super.password;
+    }
+
     // =======================================================================
     //
     // VALUE protocol
