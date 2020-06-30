@@ -252,6 +252,24 @@ describe("URL", () => {
             });
         });
 
+        describe(".protocol", () => {
+            it("contains the `protocol` section of the URL", () => {
+                const unit = new URL("http://example.com:8080/this/is/a/path?with=search#andFragment");
+                const expectedValue = "http:";
+
+                const actualValue = unit.protocol;
+                expect(actualValue).to.equal(expectedValue);
+            });
+
+            it("contains the normalised combination of main input value and base value", () => {
+                const unit = new URL("../another/path#andDifferentFragment", { base: "http://example.com:8080/this/is/a/path?with=search#andFragment" });
+                const expectedValue = "http:";
+
+                const actualValue = unit.protocol;
+                expect(actualValue).to.equal(expectedValue);
+            });
+        });
+
         describe(".parse()", () => {
             it("returns a breakdown of the URL's contents", () => {
                 const inputLocation = "http://example.com:8080/this/is/a/path?with=search#andFragment";

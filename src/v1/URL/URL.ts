@@ -225,6 +225,16 @@ export class URL extends NodeURL implements Value<string>{
         return super.port;
     }
 
+    /**
+     * `protocol` is the `protocol` section of this URL (e.g. `https:`).
+     * The returned string always ends with `:`.
+     *
+     * Unlike the underlying NodeJS URL, this is readonly.
+     */
+    get protocol() {
+        return super.protocol;
+    }
+
     // =======================================================================
     //
     // VALUE protocol
