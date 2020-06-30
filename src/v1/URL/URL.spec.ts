@@ -469,6 +469,57 @@ describe("URL", () => {
                 expect(unit.hash).to.equal("");
             });
         });
+
+        describe(".join()", () => {
+            it("returns a new URL that points to the parent folder", () => {
+                const url = new URL("http://example.com/this/is/a/path");
+                const expectedHRef = "http://example.com/this/is/another/path/";
+                const expectedPathname = "/this/is/another/path/";
+
+                const unit = url.join("..", "../another", "path/");
+
+                const actualHRef = unit.href;
+                const actualPathname = unit.pathname;
+
+                expect(actualHRef).to.equal(expectedHRef);
+                expect(actualPathname).to.equal(expectedPathname);
+            });
+
+            it("returned URL has the same base", () => {
+                const url = new URL("this/is/a/path", { base: "http://example.com" });
+                const expectedHRef = "http://example.com/this/is/another/path/";
+                const expectedBase = "http://example.com";
+
+                const unit = url.join("..", "../another", "path/");
+
+                const actualHRef = unit.href;
+                const actualBase = unit.base;
+
+                expect(actualHRef).to.equal(expectedHRef);
+                expect(actualBase).to.equal(expectedBase);
+                expect(unit.base).to.equal(url.base);
+            });
+
+            it("drops any search terms", () => {
+                const url = new URL("http://example.com/this/is/a/path?with=search");
+                const expectedHRef = "http://example.com/this/is/another/path/";
+
+                const unit = url.join("..", "../another", "path/");
+
+                expect(unit.href).to.equal(expectedHRef);
+                expect(unit.search).to.equal("");
+            });
+
+            it("drops any #fragment", () => {
+                const url = new URL("http://example.com/this/is/a/path#withFragment");
+                const expectedHRef = "http://example.com/this/is/another/path/";
+
+                const unit = url.join("..", "../another", "path/");
+
+                expect(unit.href).to.equal(expectedHRef);
+                expect(unit.hash).to.equal("");
+            });
+        });
     });
 
     describe("value protocol", () => {

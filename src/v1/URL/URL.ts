@@ -326,4 +326,27 @@ export class URL extends NodeURL implements Value<string>{
         const href = makeHRef(parts);
         return new URL(href, { base: this.base });
     }
+
+    /**
+     * `join()` builds a new URL by combining the current URL's query string
+     * (aka pathname) with the given path segments.
+     *
+     * The new URL:
+     * - has the same `base` as this URL
+     * - has no `search` terms
+     * - has no `#fragment`
+     *
+     * @param paths
+     * the path segment(s) to apply to this URL's query string
+     */
+    public join(...paths: string[]): URL {
+        const parts = this.parse();
+        parts.pathname = posix.join(parts.pathname, ...paths);
+
+        parts.search = undefined;
+        parts.hash = undefined;
+
+        const href = makeHRef(parts);
+        return new URL(href, { base: this.base });
+    }
 }
