@@ -54,6 +54,7 @@ The following changes have been completed, and will be included in the next tagg
     - made `URL.host` read-only
     - made `URL.hostname` read-only
     - made `URL.href` read-only
+    - made `URL.origin` read-only
   - added `isURLData()`
   - added `makeURL()`
   - added `mustBeURLData()`

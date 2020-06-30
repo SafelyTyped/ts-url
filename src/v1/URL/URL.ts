@@ -186,6 +186,15 @@ export class URL extends NodeURL implements Value<string>{
         return super.href;
     }
 
+    /**
+     * `origin` is the `protocol://hostname:port` portion of this URL.
+     *
+     * Unlike the underlying NodeJS URL, this is readonly.
+     */
+    get origin() {
+        return super.origin;
+    }
+
     // =======================================================================
     //
     // VALUE protocol
