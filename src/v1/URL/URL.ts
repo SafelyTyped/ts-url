@@ -48,7 +48,7 @@ export class URL extends NodeURL implements Value<string>{
     /**
      * `base` tracks the URL that this URL is (possibly) partial to.
      */
-    public readonly _base?: string;
+    public readonly _base: string;
 
     public readonly _value: string;
 
@@ -70,7 +70,7 @@ export class URL extends NodeURL implements Value<string>{
         {
             onError = THROW_THE_ERROR,
             path = DEFAULT_DATA_PATH,
-            base,
+            base = input,
         }: {
             base?: string,
             onError?: OnError,
@@ -93,6 +93,9 @@ export class URL extends NodeURL implements Value<string>{
 
         // As far as I can tell, there's no way to get the base value
         // our of our base class. We have to track it ourselves.
+        //
+        // If no `base` has been provided, we use the `input`. That way,
+        // we have something to track at all times.
         this._base = base;
         this._value = input;
     }
@@ -395,7 +398,7 @@ export class URL extends NodeURL implements Value<string>{
             if (isAbsoluteHRefData(hrefOrPart)) {
                 // a full URL replaces our existing URL,
                 // and brings our journey to an end
-                return new URL(hrefOrPart, { base: hrefOrPart });
+                return new URL(hrefOrPart);
             }
 
             // general cases: we're going to mod the parts we've

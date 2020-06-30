@@ -74,7 +74,9 @@ describe("URL", () => {
 
         describe(".base", () => {
             ValidURLs.forEach((example) => {
-                const { inputValue, baseValue } = example;
+                const inputValue = example.inputValue;
+                const baseValue = example.baseValue ?? inputValue;
+
                 it("contains " + baseValue + " for a URL built with " + JSON.stringify(example), () => {
                     const unit = new URL(inputValue, { base: baseValue });
                     const actualValue = unit.base;
