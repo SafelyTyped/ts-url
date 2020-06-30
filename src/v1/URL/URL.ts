@@ -205,6 +205,16 @@ export class URL extends NodeURL implements Value<string>{
         return super.password;
     }
 
+    /**
+     * `pathname` is the query path section of this URL. Defaults to `/`
+     * if there is no path provided to the constructor.
+     *
+     * Unlike the underlying NodeJS URL, this is readonly.
+     */
+    get pathname() {
+        return super.pathname;
+    }
+
     // =======================================================================
     //
     // VALUE protocol
