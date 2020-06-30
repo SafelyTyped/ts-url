@@ -84,6 +84,24 @@ describe("URL", () => {
             });
         });
 
+        describe(".hash", () => {
+            it("contains the #fragment section of a URL", () => {
+                const unit = new URL("http://example.com:8080/this/is/a/path?with=search#andFragment");
+                const expectedValue = "#andFragment";
+
+                const actualValue = unit.hash;
+                expect(actualValue).to.equal(expectedValue);
+            });
+
+            it("is an empty string when the URL does not contain a #fragment", () => {
+                const unit = new URL("http://example.com:8080/this/is/a/path?with=search");
+                const expectedValue = "";
+
+                const actualValue = unit.hash;
+                expect(actualValue).to.equal(expectedValue);
+            });
+        });
+
         describe(".parse()", () => {
             it("returns a breakdown of the URL's contents", () => {
                 const inputLocation = "http://example.com:8080/this/is/a/path?with=search#andFragment";

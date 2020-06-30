@@ -37,7 +37,7 @@ import {
     Value,
 } from "@safelytyped/core-types";
 import { makeIpPort } from "@safelytyped/ip-port";
-import { URL as NodeURL } from "url";
+import { URL as NodeURL, URLSearchParams } from "url";
 
 import { InvalidURLDataError } from "../Errors";
 import { ParsedURL } from "../ParsedURL";
@@ -137,6 +137,24 @@ export class URL extends NodeURL implements Value<string>{
 
         // all done
         return retval;
+    }
+
+    // =======================================================================
+    //
+    // URL protocol
+    //
+    // We need to turn this read/write object into an immutable object.
+    // Unfortunately, that forces us to define getters as well as setters.
+    //
+    // -----------------------------------------------------------------------
+
+    /**
+     * `hash` is the `#fragment` section of this URL. May be an empty string.
+     *
+     * Unlike the underlying NodeJS URL, this is readonly.
+     */
+    get hash(): string {
+        return super.hash;
     }
 
     // =======================================================================
