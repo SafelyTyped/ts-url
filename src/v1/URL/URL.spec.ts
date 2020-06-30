@@ -138,6 +138,24 @@ describe("URL", () => {
             });
         });
 
+        describe(".href", () => {
+            it("contains the full URL", () => {
+                const unit = new URL("http://example.com:8080/this/is/a/path?with=search#andFragment");
+                const expectedValue = "http://example.com:8080/this/is/a/path?with=search#andFragment";
+
+                const actualValue = unit.href;
+                expect(actualValue).to.equal(expectedValue);
+            });
+
+            it("contains the normalised combination of main input value and base value", () => {
+                const unit = new URL("../another/path#andDifferentFragment", { base: "http://example.com/this/is/a/path?with=search#andFragment" });
+                const expectedValue = "http://example.com/this/is/another/path#andDifferentFragment";
+
+                const actualValue = unit.href;
+                expect(actualValue).to.equal(expectedValue);
+            });
+        });
+
         describe(".parse()", () => {
             it("returns a breakdown of the URL's contents", () => {
                 const inputLocation = "http://example.com:8080/this/is/a/path?with=search#andFragment";

@@ -176,7 +176,15 @@ export class URL extends NodeURL implements Value<string>{
         return super.hostname;
     }
 
-
+    /**
+     * `href` is the full, normalised URL string. It is the same value
+     * returned by {@link URL.toString}.
+     *
+     * Unlike the underlying NodeJS URL, this is readonly.
+     */
+    get href() {
+        return super.href;
+    }
 
     // =======================================================================
     //
