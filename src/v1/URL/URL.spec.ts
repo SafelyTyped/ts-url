@@ -102,6 +102,24 @@ describe("URL", () => {
             });
         });
 
+        describe(".host", () => {
+            it("contains the hostname:port section of a URL", () => {
+                const unit = new URL("http://example.com:8080/this/is/a/path?with=search#andFragment");
+                const expectedValue = "example.com:8080";
+
+                const actualValue = unit.host;
+                expect(actualValue).to.equal(expectedValue);
+            });
+
+            it("contains just the hostname section if there is no port defined", () => {
+                const unit = new URL("http://example.com/this/is/a/path?with=search#andFragment");
+                const expectedValue = "example.com";
+
+                const actualValue = unit.host;
+                expect(actualValue).to.equal(expectedValue);
+            });
+        });
+
         describe(".parse()", () => {
             it("returns a breakdown of the URL's contents", () => {
                 const inputLocation = "http://example.com:8080/this/is/a/path?with=search#andFragment";

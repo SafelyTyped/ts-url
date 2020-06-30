@@ -157,6 +157,15 @@ export class URL extends NodeURL implements Value<string>{
         return super.hash;
     }
 
+    /**
+     * `host` is the `hostname:port` section of the URL.
+     *
+     * Unlike the underlying NodeJS URL, this is readonly.
+     */
+    get host() {
+        return super.host;
+    }
+
     // =======================================================================
     //
     // VALUE protocol
@@ -184,4 +193,12 @@ export class URL extends NodeURL implements Value<string>{
     public implementsValue(): boolean {
         return true;
     }
+
+    // =======================================================================
+    //
+    // PATH protocol
+    //
+    // -----------------------------------------------------------------------
+
+
 }
