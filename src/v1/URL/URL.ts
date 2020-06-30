@@ -51,6 +51,13 @@ export class URL extends NodeURL implements Value<string>{
     public readonly _value: string;
 
     /**
+     * `_parsed` is an internal cache. It holds the result of calling
+     * `this.parse()`, so that we don't have to calculate it a second
+     * time.
+     */
+    private _parsed?: ParsedURL;
+
+    /**
      * `constructor()` is a smart constructor.
      *
      * @param input
@@ -100,6 +107,11 @@ export class URL extends NodeURL implements Value<string>{
      * manipulating the URL.
      */
     public parse(): ParsedURL {
+        // have we done this before?
+        if (this._parsed) {
+            return this._parsed;
+        }
+
         const retval: ParsedURL = {
             protocol: this.protocol,
             hostname: this.hostname,
@@ -119,6 +131,9 @@ export class URL extends NodeURL implements Value<string>{
         if (retval.search) {
             retval.searchParams = this.searchParams;
         }
+
+        // remember this for next time
+        this._parsed = retval;
 
         // all done
         return retval;
