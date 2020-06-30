@@ -37,9 +37,9 @@ import url from "url";
  * `ParsedURL` holds a breakdown of a URL, using terms from the WHATWG
  * specification.
  *
- * NOTE that we do *NOT* support the `username` and `password` fields.
- * These are deprecated by RFC 3986, and may not be supported by your
- * choice of browser AND/OR your destination.
+ * NOTE that we do support the `username` and `password` fields, but
+ * you shouldn't use them in new code. These are deprecated by RFC 3986,
+ * and may not be supported by your choice of browser AND/OR your destination.
  *
  * NOTE that we do *NOT support protocol-relative URLs here, because
  * the underlying NodeJS URL doesn't support them.
@@ -51,6 +51,16 @@ export interface ParsedURL {
      * `protocol` holds the network scheme to use (eg 'http' or 'https').
      */
     protocol: string;
+
+    /**
+     * `username` holds the username to authenticate as (eg `git`).
+     */
+    username?: string;
+
+    /**
+     * `password` holds the password to authenticate with.
+     */
+    password?: string;
 
     /**
      * `hostname` is the server where the remote data is hosted.

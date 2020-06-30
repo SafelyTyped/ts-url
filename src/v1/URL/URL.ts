@@ -119,6 +119,12 @@ export class URL extends NodeURL implements Value<string>{
         };
 
         // unfortunately, this is the best way to handle these
+        if (this.username.length > 0) {
+            retval.username = this.username;
+        }
+        if (this.password.length > 0) {
+            retval.password = this.password;
+        }
         if (this.port.length > 0) {
             retval.port = makeIpPort(this.port);
         }

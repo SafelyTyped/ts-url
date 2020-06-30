@@ -347,10 +347,12 @@ describe("URL", () => {
 
         describe(".parse()", () => {
             it("returns a breakdown of the URL's contents", () => {
-                const inputLocation = "http://example.com:8080/this/is/a/path?with=search#andFragment";
+                const inputLocation = "http://user:password@example.com:8080/this/is/a/path?with=search#andFragment";
                 const unit = new URL(inputLocation);
                 const expectedValue: ParsedURL = {
                     protocol: "http:",
+                    username: "user",
+                    password: "password",
                     hostname: "example.com",
                     port: makeIpPort("8080"),
                     pathname: "/this/is/a/path",
