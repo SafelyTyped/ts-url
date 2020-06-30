@@ -57,6 +57,7 @@ The following changes have been completed, and will be included in the next tagg
     - made `URL.origin` read-only
     - made `URL.password` read-only
     - made `URL.pathname` read-only
+    - made `URL.port` read-only
   - added `isURLData()`
   - added `makeURL()`
   - added `mustBeURLData()`

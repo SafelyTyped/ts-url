@@ -215,6 +215,16 @@ export class URL extends NodeURL implements Value<string>{
         return super.pathname;
     }
 
+    /**
+     * `port` is the port number section of this URL. May be an empty
+     * string.
+     *
+     * Unlike the underlying NodeJS URL, this is readonly.
+     */
+    get port() {
+        return super.port;
+    }
+
     // =======================================================================
     //
     // VALUE protocol
