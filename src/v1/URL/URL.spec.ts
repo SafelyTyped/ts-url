@@ -32,7 +32,7 @@
 import { makeIpPort } from "@safelytyped/ip-port";
 import { expect } from "chai";
 import { describe } from "mocha";
-import { URL as NodeURL } from "url";
+import { URL as NodeURL, URLSearchParams } from "url";
 
 import { InvalidURLs, ValidURLs } from "../_fixtures/URLs.spec";
 import { InvalidURLDataError } from "../Errors";
@@ -292,6 +292,29 @@ describe("URL", () => {
                 const expectedValue = "";
 
                 const actualValue = unit.search;
+                expect(actualValue).to.equal(expectedValue);
+            });
+        });
+
+        describe(".searchParams", () => {
+            it("contains the `search` section of the URL", () => {
+                const unit = new URL("http://example.com:8080/this/is/a/path?with=search#andFragment");
+                const expectedValue = new URLSearchParams("?with=search");
+
+                const actualValue = unit.searchParams;
+                expect(actualValue).to.eql(expectedValue);
+            });
+
+            it("changing the returned value does not affect the URL", () => {
+                const url = new URL("http://example.com");
+                const unit = url.searchParams;
+                const expectedValue = "";
+
+                // with NodeJS' built-in URL type, this action would have
+                // modified the original URL value
+                unit.append("with", "search");
+
+                const actualValue = url.search;
                 expect(actualValue).to.equal(expectedValue);
             });
         });

@@ -245,6 +245,17 @@ export class URL extends NodeURL implements Value<string>{
         return super.search;
     }
 
+    /**
+     * `searchParams` is a getter. It returns a list of the query string
+     * parameters for this object.
+     *
+     * NOTE: unlike NodeJS's built-in URL class, the search parameters
+     * we return don't affect this URL's value at all.
+     */
+    get searchParams(): URLSearchParams {
+        return new URLSearchParams(super.searchParams);
+    }
+
     // =======================================================================
     //
     // VALUE protocol
