@@ -4,7 +4,24 @@
 // how to import into your own code
 import { URL } from "@safelytyped/url";
 
-export class URL extends NodeURL implements Value<string>{
+// types that we use in our definition
+import {
+    DataPath,
+    DEFAULT_DATA_PATH,
+    OnError,
+    THROW_THE_ERROR,
+    Value,
+    ToString,
+} from "@safelytyped/core-types";
+import { URL as NodeURL, URLSearchParams } from "url";
+
+/**
+ * `URL` is a safe type. It is an immutable equivalent of NodeJS's built-in
+ * `URL` type.
+ *
+ * Internally, it uses a wrapped NodeJS `URL` to guarantee the same behaviour.
+ */
+export class URL implements ToString, Value<string> {
     /**
      * `constructor()` is a smart constructor.
      *
@@ -46,26 +63,54 @@ export class URL extends NodeURL implements Value<string>{
      */
     public parse(): ParsedURL;
 
+    /**
+     * `toNodeUrl()` returns this URL in a form that's compatible with
+     * NodeJS's `URL` object.
+     */
+    public toNodeUrl(): NodeURL;
+
+    // =======================================================================
+    //
+    // JSON protocol
+    //
+    // -----------------------------------------------------------------------
+
+    /**
+     * `toJSON()` returns this URL as a JSON-encoded string
+     */
+    public toJSON(): string;
+
+    // =======================================================================
+    //
+    // ToString protocol
+    //
+    // -----------------------------------------------------------------------
+
+    /**
+     * `toString()` returns this URL as a string, suitable for use in
+     * HTTP requests
+     */
+    public toString(): string;
+
     // =======================================================================
     //
     // URL protocol
     //
-    // We need to turn this read/write object into an immutable object.
-    // Unfortunately, that forces us to define getters as well as setters.
+    // A readonly equivalent of the NodeJS URL type.
     //
     // -----------------------------------------------------------------------
 
     /**
      * `hash` is the `#fragment` section of this URL. May be an empty string.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the wrapped NodeJS URL, this is readonly.
      */
     public readonly hash: string;
 
     /**
      * `host` is the `hostname:port` section of the URL.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the wrapped NodeJS URL, this is readonly.
      */
     public readonly host: string;
 
@@ -73,7 +118,7 @@ export class URL extends NodeURL implements Value<string>{
      * `hostname` is the `hostname` section of the URL. Guaranteed not
      * to be an empty string.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the wrapped NodeJS URL, this is readonly.
      */
     public readonly hostname: string;
 
@@ -81,14 +126,14 @@ export class URL extends NodeURL implements Value<string>{
      * `href` is the full, normalised URL string. It is the same value
      * returned by {@link URL.toString}.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the wrapped NodeJS URL, this is readonly.
      */
     public readonly href: string;
 
     /**
      * `origin` is the `protocol://hostname:port` portion of this URL.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the wrapped NodeJS URL, this is readonly.
      */
     public readonly origin: string;
 
@@ -96,7 +141,7 @@ export class URL extends NodeURL implements Value<string>{
      * `password` is the `password` section of this URL. May be an empty
      * string.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the wrapped NodeJS URL, this is readonly.
      */
     public readonly password: string;
 
@@ -104,7 +149,7 @@ export class URL extends NodeURL implements Value<string>{
      * `pathname` is the query path section of this URL. Defaults to `/`
      * if there is no path provided to the constructor.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the wrapped NodeJS URL, this is readonly.
      */
     public readonly pathname: string;
 
@@ -112,7 +157,7 @@ export class URL extends NodeURL implements Value<string>{
      * `port` is the port number section of this URL. May be an empty
      * string.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the wrapped NodeJS URL, this is readonly.
      */
     public readonly port: string;
 
@@ -120,7 +165,7 @@ export class URL extends NodeURL implements Value<string>{
      * `protocol` is the `protocol` section of this URL (e.g. `https:`).
      * The returned string always ends with `:`.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the wrapped NodeJS URL, this is readonly.
      */
     public readonly protocol: string;
 
@@ -128,7 +173,7 @@ export class URL extends NodeURL implements Value<string>{
      * `search` is the query string section of this URL. May be an empty
      * string.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the wrapped NodeJS URL, this is readonly.
      */
     public readonly search: string;
 
@@ -136,15 +181,15 @@ export class URL extends NodeURL implements Value<string>{
      * `searchParams` is a getter. It returns a list of the query string
      * parameters for this object.
      *
-     * NOTE: unlike NodeJS's built-in URL class, the search parameters
-     * we return don't affect this URL's value at all.
+     * NOTE: unlike NodeJS's built-in URL class, changes made to the search
+     * parameters we return don't affect this URL's value at all.
      */
     public readonly searchParams: URLSearchParams;
 
     /**
      * `username` is the username section of this URL. May be an empty string.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the wrapped NodeJS URL, this is readonly.
      */
     public readonly username: string;
 

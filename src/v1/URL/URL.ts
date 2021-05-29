@@ -35,6 +35,7 @@ import {
     OnError,
     THROW_THE_ERROR,
     Value,
+    ToString,
 } from "@safelytyped/core-types";
 import { makeIpPort } from "@safelytyped/ip-port";
 import { posix } from "path";
@@ -44,7 +45,13 @@ import { InvalidURLDataError } from "../Errors";
 import { isAbsoluteHRefData, isHRefHashData, isHRefSearchData, makeHRef } from "../HRef";
 import { ParsedURL } from "../ParsedURL";
 
-export class URL extends NodeURL implements Value<string>{
+/**
+ * `URL` is a safe type. It is an immutable equivalent of NodeJS's built-in
+ * `URL` type.
+ *
+ * Internally, it uses a wrapped NodeJS `URL` to guarantee the same behaviour.
+ */
+export class URL implements ToString, Value<string> {
     /**
      * `base` tracks the URL that this URL is (possibly) partial to.
      */
@@ -58,6 +65,12 @@ export class URL extends NodeURL implements Value<string>{
      * time.
      */
     private _parsed?: ParsedURL;
+
+    /**
+     * As of TypeScript 4.0, we can no longer extend Node's built-in
+     * URL class. Instead, we must act as a wrapper instead.
+     */
+    private _wrapped: NodeURL;
 
     /**
      * `constructor()` is a smart constructor.
@@ -89,10 +102,10 @@ export class URL extends NodeURL implements Value<string>{
         } = {}
     ) {
         // this is a bit different, because we're wrapping a built-in
-        // base class
+        // NodeJS class
         try {
             // keep the base class happy
-            super(input, base);
+            this._wrapped = new NodeURL(input, base);
         } catch (e) {
             throw onError(new InvalidURLDataError({
                 public: {
@@ -102,8 +115,8 @@ export class URL extends NodeURL implements Value<string>{
             }));
         }
 
-        // As far as I can tell, there's no way to get the base value
-        // our of our base class. We have to track it ourselves.
+        // As far as I can tell, there's no way to get the `base` value
+        // our of our wrapped class. We have to track it ourselves.
         //
         // If no `base` has been provided, we use the `input`. That way,
         // we have something to track at all times.
@@ -161,130 +174,164 @@ export class URL extends NodeURL implements Value<string>{
         return retval;
     }
 
+    /**
+     * `toNodeUrl()` returns this URL in a form that's compatible with
+     * NodeJS's `URL` object.
+     */
+    public toNodeUrl(): NodeURL {
+        return this._wrapped;
+    }
+
+    // =======================================================================
+    //
+    // JSON protocol
+    //
+    // -----------------------------------------------------------------------
+
+    /**
+     * `toJSON()` returns this URL as a JSON-encoded string
+     */
+    public toJSON(): string {
+        return this._wrapped.toJSON();
+    }
+
+    // =======================================================================
+    //
+    // ToString protocol
+    //
+    // -----------------------------------------------------------------------
+
+    /**
+     * `toString()` returns this URL as a string, suitable for use in
+     * HTTP requests
+     */
+    public toString(): string {
+        return this._wrapped.toString();
+    }
+
     // =======================================================================
     //
     // URL protocol
     //
-    // We need to turn this read/write object into an immutable object.
-    // Unfortunately, that forces us to define getters as well as setters.
+    // A readonly equivalent of the NodeJS URL type.
     //
     // -----------------------------------------------------------------------
 
     /**
      * `hash` is the `#fragment` section of this URL. May be an empty string.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the built-in NodeJS URL, this is readonly.
      */
     get hash(): string {
-        return super.hash;
+        return this._wrapped.hash;
     }
 
     /**
      * `host` is the `hostname:port` section of the URL.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the built-in NodeJS URL, this is readonly.
      */
     get host() {
-        return super.host;
+        return this._wrapped.host;
     }
 
     /**
      * `hostname` is the `hostname` section of the URL. Guaranteed not
      * to be an empty string.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the built-in NodeJS URL, this is readonly.
      */
     get hostname() {
-        return super.hostname;
+        return this._wrapped.hostname;
     }
 
     /**
      * `href` is the full, normalised URL string. It is the same value
      * returned by {@link URL.toString}.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the built-in NodeJS URL, this is readonly.
      */
     get href() {
-        return super.href;
+        return this._wrapped.href;
     }
 
     /**
      * `origin` is the `protocol://hostname:port` portion of this URL.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the built-in NodeJS URL, this is readonly.
      */
     get origin() {
-        return super.origin;
+        return this._wrapped.origin;
     }
 
     /**
      * `password` is the `password` section of this URL. May be an empty
      * string.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the built-in NodeJS URL, this is readonly.
      */
     get password() {
-        return super.password;
+        return this._wrapped.password;
     }
 
     /**
      * `pathname` is the query path section of this URL. Defaults to `/`
      * if there is no path provided to the constructor.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the built-in NodeJS URL, this is readonly.
      */
     get pathname() {
-        return super.pathname;
+        return this._wrapped.pathname;
     }
 
     /**
      * `port` is the port number section of this URL. May be an empty
      * string.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the built-in NodeJS URL, this is readonly.
      */
     get port() {
-        return super.port;
+        return this._wrapped.port;
     }
 
     /**
      * `protocol` is the `protocol` section of this URL (e.g. `https:`).
      * The returned string always ends with `:`.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the built-in NodeJS URL, this is readonly.
      */
     get protocol() {
-        return super.protocol;
+        return this._wrapped.protocol;
     }
 
     /**
      * `search` is the query string section of this URL. May be an empty
      * string.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the built-in NodeJS URL, this is readonly.
      */
     get search() {
-        return super.search;
+        return this._wrapped.search;
     }
 
     /**
      * `searchParams` is a getter. It returns a list of the query string
      * parameters for this object.
      *
-     * NOTE: unlike NodeJS's built-in URL class, the search parameters
-     * we return don't affect this URL's value at all.
+     * NOTE: unlike NodeJS's built-in URL class, changes made to the search
+     * parameters we return don't affect this URL's value at all.
      */
     get searchParams(): URLSearchParams {
-        return new URLSearchParams(super.searchParams);
+        return new URLSearchParams(this._wrapped.searchParams);
     }
 
     /**
      * `username` is the username section of this URL. May be an empty string.
      *
-     * Unlike the underlying NodeJS URL, this is readonly.
+     * Unlike the built-in NodeJS URL, this is readonly.
      */
     get username() {
-        return super.username;
+        return this._wrapped.username;
     }
 
     // =======================================================================

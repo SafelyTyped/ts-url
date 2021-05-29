@@ -21,6 +21,23 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+## v0.2.0
+
+Released Saturday, 29th May 2021
+
+### Backwards-Compatibility Breaks
+
+* `URL` is no longer a child class of NodeJS's `URL`
+  - caused by [this TypeScript v4.0 compiler change](https://github.com/microsoft/TypeScript/pull/37894)
+
+### Dependencies
+
+* Upgraded all dependencies to their latest version
+
+### New
+
+* Added `URL.toNodeUrl()`
+
 ## v0.1.0
 
 Released Tuesday, 30th June 2020.
