@@ -404,12 +404,31 @@ describe("URL", () => {
         });
     });
 
-    describe("base class", () => {
-        it("is an instance of NodeJS built-in URL", () => {
-            const unit = new URL("http://example.com");
+    describe("class conversions", () => {
+        describe(".toNodeUrl()", () => {
+            it("returns instance of NodeJS built-in URL", () => {
+                const unit = new URL("http://example.com");
 
-            expect(unit).to.be.instanceOf(URL);
-            expect(unit).to.be.instanceOf(NodeURL);
+                const actualValue = unit.toNodeUrl();
+
+                expect(unit).to.be.instanceOf(URL);
+                expect(actualValue).to.be.instanceOf(NodeURL);
+            });
+        });
+    });
+
+    describe("JSON protocol", () => {
+        describe(".toJSON()", () => {
+            it("returns a JSON representation of the URL", () => {
+                const inputValue = "http://example.com/this/is/a/path";
+                const control = new NodeURL(inputValue);
+                const expectedValue = control.toJSON();
+
+                const unit = new URL(inputValue);
+                const actualValue = unit.toJSON();
+
+                expect(actualValue).to.eql(expectedValue);
+            });
         });
     });
 
@@ -576,6 +595,21 @@ describe("URL", () => {
                 const actualHRef = newUrl.href;
 
                 expect(actualHRef).to.equal(expectedHRef);
+            });
+        });
+    });
+
+    describe("ToString protocol", () => {
+        describe(".toString()", () => {
+            it("returns the URL as a string", () => {
+                const inputValue = "http://example.com/this/is/a/path";
+                const control = new NodeURL(inputValue);
+                const expectedValue = control.toString();
+
+                const unit = new URL(inputValue);
+                const actualValue = unit.toString();
+
+                expect(actualValue).to.eql(expectedValue);
             });
         });
     });
