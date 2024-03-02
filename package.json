@@ -1,6 +1,6 @@
 {
   "name": "@safelytyped/url",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A safe type for working with remote locations, for Typescript.",
   "repository": "github:SafelyTyped/ts-url",
   "main": "lib/cjs/index.js",
