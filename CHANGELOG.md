@@ -21,6 +21,20 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+## v0.3.0
+
+Released Saturday, 2nd March 2024.
+
+### Fixes
+
+* Added simultaneous support for CommonJS and ESM runtime environments
+* Added exports to the top-level index file (doh!)
+
+### Backwards-Compatibility Breaks
+
+- upgraded to Typescript v5.2
+- migrated from tslint to eslint
+
 ## v0.2.0
 
 Released Saturday, 29th May 2021
